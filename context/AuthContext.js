@@ -31,13 +31,16 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     // Logique de déconnexion (par exemple, supprimer un token)
     try {
-      const response = await fetch("http://localhost:3000/users/sign_out", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/sign_out`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
         },
-        credentials: "include",
-      });
+      );
 
       if (response.ok) {
         localStorage.removeItem("token");

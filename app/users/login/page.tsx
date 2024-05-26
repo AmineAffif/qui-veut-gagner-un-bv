@@ -32,14 +32,17 @@ const validate = (values: LoginFormValues): FormikErrors<LoginFormValues> => {
 };
 
 const login = async (values: LoginFormValues) => {
-  const response = await fetch("http://localhost:3000/users/sign_in", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/users/sign_in`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ user: values }),
+      credentials: "include",
     },
-    body: JSON.stringify({ user: values }),
-    credentials: "include",
-  });
+  );
 
   if (!response.ok) {
     let error = "Une erreur est survenue";
