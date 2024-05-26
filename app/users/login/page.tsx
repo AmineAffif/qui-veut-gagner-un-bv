@@ -1,11 +1,85 @@
+"use client";
+
+import { useContext } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-
+import {
+  Formik,
+  Form,
+  Field,
+  FormikConfig,
+  FormikProps,
+  FormikErrors,
+} from "formik";
+import isEmail from "validator/lib/isEmail";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useAuth } from "context/AuthContext";
+
+interface LoginFormValues {
+  email: string;
+  password: string;
+}
+
+const validate = (values: LoginFormValues): FormikErrors<LoginFormValues> => {
+  const errors: FormikErrors<LoginFormValues> = {};
+  if (!values.email) errors.email = "L'email est requis";
+  else if (!isEmail(values.email)) errors.email = "Cet email n'est pas valide";
+  if (!values.password) errors.password = "Le mot de passe est requis";
+  return errors;
+};
+
+const login = async (values: LoginFormValues) => {
+  const response = await fetch("http://localhost:3000/users/sign_in", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ user: values }),
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    let error = "Une erreur est survenue";
+    try {
+      const data = await response.text();
+      if (data === "Invalid Email or password.") {
+        error = "Email ou mot de passe invalide";
+      }
+    } catch (e) {
+      // Si la réponse n'est pas un texte valide, on garde le message d'erreur par défaut
+    }
+    throw new Error(error);
+  }
+
+  return response.json();
+};
 
 export default function LoginPage() {
+  const router = useRouter();
+  const { login: authLogin } = useAuth();
+
+  const handleSubmit: FormikConfig<LoginFormValues>["onSubmit"] = async (
+    values,
+    { setSubmitting, setStatus },
+  ) => {
+    try {
+      setSubmitting(true);
+      const response = await login(values);
+      console.log("values = ", values);
+      console.log("response.user = ", response.user);
+
+      authLogin(response.user); // Utiliser les informations de l'utilisateur renvoyées par la réponse
+      router.push("/home");
+    } catch (error: any) {
+      setStatus({ error: error.message });
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px] flex items-center justify-center min-h-screen">
       <div className="flex items-center justify-center py-12">
@@ -13,32 +87,55 @@ export default function LoginPage() {
           <div className="grid gap-2 text-center">
             <h1 className="text-3xl font-bold">Se connecter</h1>
           </div>
-          <div className="grid gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="prenom.nom@cevidentia.com"
-                required
-              />
-            </div>
-            <div className="grid gap-2">
-              <div className="flex items-center">
-                <Label htmlFor="password">Mot de passe</Label>
-                <Link
-                  href="/users/forgot-password"
-                  className="ml-auto inline-block text-sm underline"
+          <Formik
+            initialValues={{ email: "", password: "" }}
+            validate={validate}
+            onSubmit={handleSubmit}
+          >
+            {({ isSubmitting, status }: FormikProps<LoginFormValues>) => (
+              <Form className="grid gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Field
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="prenom.nom@cevidentia.com"
+                    required
+                    as={Input}
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <div className="flex items-center">
+                    <Label htmlFor="password">Mot de passe</Label>
+                    <Link
+                      href="/users/forgot-password"
+                      className="ml-auto inline-block text-sm underline"
+                    >
+                      Mot de passe oublié ?
+                    </Link>
+                  </div>
+                  <Field
+                    id="password"
+                    name="password"
+                    type="password"
+                    required
+                    as={Input}
+                  />
+                </div>
+                {status?.error && (
+                  <div className="text-red-500 text-sm">{status.error}</div>
+                )}
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={isSubmitting}
                 >
-                  Mot de passe oublié ?
-                </Link>
-              </div>
-              <Input id="password" type="password" required />
-            </div>
-            <Button type="submit" className="w-full">
-              Se connecter
-            </Button>
-          </div>
+                  {isSubmitting ? "Connexion en cours..." : "Se connecter"}
+                </Button>
+              </Form>
+            )}
+          </Formik>
           <div className="mt-4 text-center text-sm">
             Pas encore de compte ?{" "}
             <Link href="/users/register" className="underline">
