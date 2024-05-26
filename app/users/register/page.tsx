@@ -49,6 +49,7 @@ const register = async (values: RegisterFormValues) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ user: values }),
+    credentials: "include",
   });
 
   if (!response.ok) {
