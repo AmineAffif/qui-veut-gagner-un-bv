@@ -17,6 +17,7 @@ module.exports = {
     },
     extend: {
       colors: {
+        sky_blue: "#5cc0ff",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
