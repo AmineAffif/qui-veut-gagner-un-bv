@@ -9,7 +9,6 @@ import { useAuth } from "context/AuthContext";
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isAuthenticated, logout } = useAuth();
-  console.log("isAuthenticatedisAuthenticatedisAuthenticated", isAuthenticated);
 
   return (
     <div className="absolute container mx-auto px-4 md:px-6 lg:px-8 bg-white z-2">
