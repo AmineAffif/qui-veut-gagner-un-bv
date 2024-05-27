@@ -8,7 +8,7 @@ import { useAuth } from "context/AuthContext";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { isAuthenticated, user, logout } = useAuth();
+  const { isAuthenticated, user, logout, loading } = useAuth();
 
   return (
     <div className="absolute w-full bg-white z-2 mx-auto px-4 md:px-6 lg:px-8 select-none">
@@ -47,25 +47,29 @@ export default function Header() {
             )}
           </nav>
           <div className="ml-auto flex gap-2">
-            {isAuthenticated ? (
-              <Button
-                className="justify-self-end px-5 py-1 text-sm"
-                variant="outline"
-                onClick={logout}
-              >
-                Se déconnecter
-              </Button>
-            ) : (
+            {!loading && (
               <>
-                <Button
-                  className="justify-self-end px-5 py-1 text-sm"
-                  variant="outline"
-                >
-                  <Link href="/users/login">Se connecter</Link>
-                </Button>
-                <Button className="justify-self-end px-5 py-1 text-sm">
-                  <Link href="/users/register">S'inscrire</Link>
-                </Button>
+                {isAuthenticated ? (
+                  <Button
+                    className="justify-self-end px-5 py-1 text-sm"
+                    variant="outline"
+                    onClick={logout}
+                  >
+                    Se déconnecter
+                  </Button>
+                ) : (
+                  <>
+                    <Button
+                      className="justify-self-end px-5 py-1 text-sm"
+                      variant="outline"
+                    >
+                      <Link href="/users/login">Se connecter</Link>
+                    </Button>
+                    <Button className="justify-self-end px-5 py-1 text-sm">
+                      <Link href="/users/register">S'inscrire</Link>
+                    </Button>
+                  </>
+                )}
               </>
             )}
           </div>

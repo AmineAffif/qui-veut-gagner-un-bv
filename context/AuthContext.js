@@ -9,6 +9,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // Ajout de l'état de chargement
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -17,10 +18,11 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(true);
       setUser(storedUser);
     }
+    setLoading(false); // Fin du chargement une fois que l'état est vérifié
   }, []);
 
   const login = ({ admin_user, is_admin }) => {
-    const user = { ...admin_user, is_admin }; // Ajoutez l'information is_admin ici
+    const user = { ...admin_user, is_admin };
     localStorage.setItem("token", user.authentication_token);
     localStorage.setItem("user", JSON.stringify(user));
     setIsAuthenticated(true);
@@ -54,7 +56,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, user, login, logout, loading }}
+    >
       {children}
     </AuthContext.Provider>
   );
