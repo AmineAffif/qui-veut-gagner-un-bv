@@ -15,7 +15,12 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "incremental": true, // Added by Next - used to make compilations faster
-    "plugins": [{ "name": "next" }]
+    "plugins": [{ "name": "next" }],
+    "paths": {
+      "@/types/*": ["Types/*"],
+      "@/context/*": ["context/*"],
+      "@/app/*": ["app/*"]
+    }
   },
   "include": [
     "next-env.d.ts",

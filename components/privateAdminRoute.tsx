@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "context/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 
 const PrivateAdminRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, user } = useAuth();

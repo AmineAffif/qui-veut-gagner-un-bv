@@ -9,20 +9,18 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // Ajout de l'état de chargement
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      const storedUser = JSON.parse(localStorage.getItem("user"));
       setIsAuthenticated(true);
-      setUser(storedUser);
+      setUser(JSON.parse(localStorage.getItem("user")));
     }
-    setLoading(false); // Fin du chargement une fois que l'état est vérifié
+    setLoading(false);
   }, []);
 
-  const login = ({ admin_user, is_admin }) => {
-    const user = { ...admin_user, is_admin };
+  const login = (user) => {
     localStorage.setItem("token", user.authentication_token);
     localStorage.setItem("user", JSON.stringify(user));
     setIsAuthenticated(true);
