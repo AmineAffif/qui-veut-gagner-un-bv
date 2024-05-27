@@ -10,18 +10,17 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
 
-  // Simuler une vérification d'authentification (par exemple, vérifier un token dans les cookies)
   useEffect(() => {
-    // Remplacer ceci par une vraie logique d'authentification
     const token = localStorage.getItem("token");
     if (token) {
+      const storedUser = JSON.parse(localStorage.getItem("user"));
       setIsAuthenticated(true);
-      setUser(JSON.parse(localStorage.getItem("user")));
+      setUser(storedUser);
     }
   }, []);
 
-  const login = (user) => {
-    // Logique de connexion (par exemple, définir un token)
+  const login = ({ admin_user, is_admin }) => {
+    const user = { ...admin_user, is_admin }; // Ajoutez l'information is_admin ici
     localStorage.setItem("token", user.authentication_token);
     localStorage.setItem("user", JSON.stringify(user));
     setIsAuthenticated(true);
@@ -29,10 +28,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    // Logique de déconnexion (par exemple, supprimer un token)
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/sign_out`,
+        `${process.env.NEXT_PUBLIC_API_URL}/admin_users/sign_out`,
         {
           method: "DELETE",
           headers: {

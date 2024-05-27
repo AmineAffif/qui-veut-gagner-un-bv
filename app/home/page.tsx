@@ -1,14 +1,14 @@
-import React from "react";
+"use client";
+
 import PrivateRoute from "components/privateRoute";
 
-const HomePage = () => {
-  return <div>Home page</div>;
-};
-
-export default function ProtectedHomePage() {
+export default function HomePage() {
   return (
     <PrivateRoute>
-      <HomePage />
+      <div className="p-4">
+        <h1 className="text-3xl font-bold">Home Page</h1>
+        {/* Ajoutez ici le contenu de votre page d'accueil */}
+      </div>
     </PrivateRoute>
   );
 }
