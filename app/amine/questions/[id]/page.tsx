@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { QuestionType } from "@/types/QuestionType";
+import Lottie from "lottie-react";
+import loadingC from "public/loading_c.json";
 
 const QuestionDetailPage = () => {
   const router = useRouter();
@@ -39,17 +41,27 @@ const QuestionDetailPage = () => {
   };
 
   const handleSave = async () => {
-    // Save logic here
     if (question) {
+      const updated_question_data = {
+        question: {
+          text: question.text,
+          right_answer_id: question.right_answer_id,
+          answers_attributes: question.answers.map((answer) => ({
+            id: answer.id,
+            text: answer.text,
+          })),
+        },
+      };
+
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/questions/${id}`,
         {
-          method: "PUT", // Use PUT method for update
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
           credentials: "include",
-          body: JSON.stringify(question),
+          body: JSON.stringify(updated_question_data),
         },
       );
 
@@ -72,8 +84,14 @@ const QuestionDetailPage = () => {
     });
   };
 
-  if (!question) return <div>Loading...</div>;
-
+  if (!question)
+    return (
+      <div className="p-6 pt-20 flex flex-col justify-center items-center h-screen">
+        <div className="w-20 h-20">
+          <Lottie animationData={loadingC} loop={true} />
+        </div>
+      </div>
+    );
   return (
     <div className="p-6">
       <h1 className="text-3xl font-bold mb-6">Question Details</h1>
