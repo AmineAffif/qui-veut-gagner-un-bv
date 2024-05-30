@@ -5,16 +5,17 @@ import { useRouter, useParams } from "next/navigation";
 import { QuestionType } from "@/types/QuestionType";
 import Lottie from "lottie-react";
 import loadingC from "public/loading_c.json";
+import { Loader2, Save } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const QuestionDetailPage = () => {
   const router = useRouter();
   const { id } = useParams();
   const [question, setQuestion] = useState<QuestionType | null>(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-    console.log("id ====== : ", id);
-
     if (id) {
       const fetchQuestion = async () => {
         const response = await fetch(
@@ -42,6 +43,7 @@ const QuestionDetailPage = () => {
 
   const handleSave = async () => {
     if (question) {
+      setIsSaving(true);
       const updated_question_data = {
         question: {
           text: question.text,
@@ -67,6 +69,7 @@ const QuestionDetailPage = () => {
 
       if (response.ok) {
         setIsEditing(false);
+        setIsSaving(false);
       }
     }
   };
@@ -93,7 +96,7 @@ const QuestionDetailPage = () => {
       </div>
     );
   return (
-    <div className="p-6">
+    <div className="p-6 pt-24">
       <h1 className="text-3xl font-bold mb-6">Question Details</h1>
       <form>
         <div className="mb-4">
@@ -101,7 +104,7 @@ const QuestionDetailPage = () => {
           <input
             type="text"
             name="id"
-            value={question.id}
+            value={question.id as number}
             disabled
             className="w-full mt-2 p-2 border"
           />
@@ -122,7 +125,7 @@ const QuestionDetailPage = () => {
           <input
             type="text"
             name="right_answer_id"
-            value={question.right_answer_id}
+            value={question.right_answer_id as number}
             onChange={handleChange}
             disabled={!isEditing}
             className="w-full mt-2 p-2 border"
@@ -199,14 +202,18 @@ const QuestionDetailPage = () => {
           >
             Modifier
           </button>
+        ) : isSaving ? (
+          <Button disabled>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Enregistrement...
+          </Button>
         ) : (
-          <button
-            type="button"
+          <Button
             onClick={handleSave}
-            className="px-4 py-2 bg-green-500 text-white"
+            className="bg-blue-500 text-white hover:bg-blue-600"
           >
-            Sauvegarder
-          </button>
+            <Save className="mr-2 h-4 w-4" /> Sauvegarder
+          </Button>
         )}
       </form>
     </div>

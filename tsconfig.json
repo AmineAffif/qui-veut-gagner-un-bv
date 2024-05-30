@@ -18,6 +18,7 @@
     "plugins": [{ "name": "next" }],
     "paths": {
       "@/types/*": ["Types/*"],
+      "@/utils/*": ["utils/*"],
       "@/context/*": ["context/*"],
       "@/app/*": ["app/*"]
     }
