@@ -21,7 +21,9 @@ export default function RootLayout({
       <AuthProvider>
         <body className={inter.className}>
           <Header />
-          {children}
+          <div className="z-0 w-full dark:bg-black bg-white  dark:bg-dot-white/[0.2] bg-dot-black/[0.2] relative flex items-center justify-center">
+            {children}
+          </div>
         </body>
       </AuthProvider>
     </html>
