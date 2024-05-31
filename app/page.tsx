@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { FlipWords } from "@/components/ui/flip-words";
 
 export default function Home() {
@@ -15,7 +18,7 @@ export default function Home() {
     </>
   );
 
-  const words = [
+  const initialWords = [
     <WordWithSpace word1="un" word2="BV" />,
     <WordWithSpace word1="une" word2="Gigi" />,
     <WordWithSpace word1="une" word2="🕶️" />,
@@ -26,11 +29,24 @@ export default function Home() {
     <WordWithSpace word1="une" word2="👓" />,
   ];
 
-  const shuffledWords = words.sort(() => Math.random() - 0.5);
+  const [shuffledWords, setShuffledWords] = useState(initialWords);
+  const [bgColor, setBgColor] = useState("");
+
+  useEffect(() => {
+    const shuffled = [...initialWords].sort(() => Math.random() - 0.5);
+    setShuffledWords(shuffled);
+
+    const colors = ["#0174f4c4", "#2900d1a3"];
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    setBgColor(randomColor);
+  }, []);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <div className="flex w-[80vw] justify-center h-full flex-col">
+    <main
+      className={`flex min-h-screen flex-col items-center justify-center p-24 w-full`}
+      style={{ backgroundColor: bgColor }}
+    >
+      <div className="flex w-[80vw] justify-center h-full flex-col text-white">
         <div className="text-6xl font-bold text-start">
           Qui veut gagner{" "}
           <FlipWords

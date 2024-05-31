@@ -48,7 +48,7 @@ const QuizPage = () => {
             "Content-Type": "application/json",
           },
           credentials: "include",
-        },
+        }
       );
 
       const data: GameType = await response.json();
@@ -67,7 +67,7 @@ const QuizPage = () => {
   useEffect(() => {
     if (game && currentQuestionIndex < game.questions.length) {
       setShuffledAnswers(
-        shuffleArray(game.questions[currentQuestionIndex].answers),
+        shuffleArray(game.questions[currentQuestionIndex].answers)
       );
     }
   }, [currentQuestionIndex, game]);
@@ -140,7 +140,7 @@ const QuizPage = () => {
               <Button
                 key={`${answer.id}-${selectedAnswer}`}
                 variant="outline"
-                className={`xs:hidden w-full ${selectedAnswer !== null ? "pointer-events-none" : ""} ${selectedAnswer === answer.id ? (isCorrect ? "bg-green-500 text-white" : "bg-red-500 text-white") : ""}`}
+                className={`whitespace-normal h-auto xs:hidden w-full ${selectedAnswer !== null ? "pointer-events-none" : ""} ${selectedAnswer === answer.id ? (isCorrect ? "bg-green-500 text-white" : "bg-red-500 text-white") : ""}`}
                 onClick={() => handleAnswerClick(answer.id)}
               >
                 {answer.text}
