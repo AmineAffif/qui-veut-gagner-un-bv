@@ -24,6 +24,7 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/context/AuthContext";
 
 interface RegisterFormValues {
+  username: string;
   first_name: string;
   last_name: string;
   email: string;
@@ -31,9 +32,10 @@ interface RegisterFormValues {
 }
 
 const validate = (
-  values: RegisterFormValues,
+  values: RegisterFormValues
 ): FormikErrors<RegisterFormValues> => {
   const errors: FormikErrors<RegisterFormValues> = {};
+  if (!values.username) errors.username = "Le pseudo est requis";
   if (!values.first_name) errors.first_name = "Le prénom est requis";
   if (!values.last_name) errors.last_name = "Le nom est requis";
   if (!values.email) errors.email = "L'email est requis";
@@ -66,7 +68,7 @@ export default function RegisterPage() {
 
   const handleSubmit: FormikConfig<RegisterFormValues>["onSubmit"] = async (
     values,
-    { setSubmitting, setStatus },
+    { setSubmitting, setStatus }
   ) => {
     try {
       setSubmitting(true);
@@ -92,6 +94,7 @@ export default function RegisterPage() {
         <CardContent>
           <Formik
             initialValues={{
+              username: "",
               first_name: "",
               last_name: "",
               email: "",
@@ -102,6 +105,16 @@ export default function RegisterPage() {
           >
             {({ isSubmitting, status }: FormikProps<RegisterFormValues>) => (
               <Form className="grid gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="username">Pseudo</Label>
+                  <Field
+                    id="username"
+                    name="username"
+                    placeholder="Pseudo"
+                    required
+                    as={Input}
+                  />
+                </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">
                     <Label htmlFor="first_name">Prénom</Label>

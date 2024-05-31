@@ -12,21 +12,19 @@ import {
   FormikProps,
   FormikErrors,
 } from "formik";
-import isEmail from "validator/lib/isEmail";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/context/AuthContext";
 
 interface LoginFormValues {
-  email: string;
+  login: string;
   password: string;
 }
 
 const validate = (values: LoginFormValues): FormikErrors<LoginFormValues> => {
   const errors: FormikErrors<LoginFormValues> = {};
-  if (!values.email) errors.email = "L'email est requis";
-  else if (!isEmail(values.email)) errors.email = "Cet email n'est pas valide";
+  if (!values.login) errors.login = "L'email ou le pseudo est requis";
   if (!values.password) errors.password = "Le mot de passe est requis";
   return errors;
 };
@@ -41,7 +39,7 @@ const login = async (values: LoginFormValues) => {
       },
       body: JSON.stringify({ user: values }),
       credentials: "include",
-    },
+    }
   );
 
   if (!response.ok) {
@@ -49,7 +47,7 @@ const login = async (values: LoginFormValues) => {
     try {
       const data = await response.text();
       if (data === "Invalid Email or password.") {
-        error = "Email ou mot de passe invalide";
+        error = "Email, pseudo ou mot de passe invalide";
       }
     } catch (e) {
       // Si la réponse n'est pas un texte valide, on garde le message d'erreur par défaut
@@ -66,7 +64,7 @@ export default function LoginPage() {
 
   const handleSubmit: FormikConfig<LoginFormValues>["onSubmit"] = async (
     values,
-    { setSubmitting, setStatus },
+    { setSubmitting, setStatus }
   ) => {
     try {
       setSubmitting(true);
@@ -91,19 +89,19 @@ export default function LoginPage() {
             <h1 className="text-3xl font-bold">Se connecter</h1>
           </div>
           <Formik
-            initialValues={{ email: "", password: "" }}
+            initialValues={{ login: "", password: "" }}
             validate={validate}
             onSubmit={handleSubmit}
           >
             {({ isSubmitting, status }: FormikProps<LoginFormValues>) => (
               <Form className="grid gap-4">
                 <div className="grid gap-2">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="login">Email ou Pseudo</Label>
                   <Field
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="prenom.nom@cevidentia.com"
+                    id="login"
+                    name="login"
+                    type="text"
+                    placeholder="Email ou Pseudo"
                     required
                     as={Input}
                   />
