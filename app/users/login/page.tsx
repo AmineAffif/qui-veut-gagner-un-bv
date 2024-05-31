@@ -101,7 +101,6 @@ export default function LoginPage() {
                     id="login"
                     name="login"
                     type="text"
-                    placeholder="Email ou Pseudo"
                     required
                     as={Input}
                   />

@@ -25,8 +25,6 @@ import { useAuth } from "@/context/AuthContext";
 
 interface RegisterFormValues {
   username: string;
-  first_name: string;
-  last_name: string;
   email: string;
   password: string;
 }
@@ -36,8 +34,6 @@ const validate = (
 ): FormikErrors<RegisterFormValues> => {
   const errors: FormikErrors<RegisterFormValues> = {};
   if (!values.username) errors.username = "Le pseudo est requis";
-  if (!values.first_name) errors.first_name = "Le prénom est requis";
-  if (!values.last_name) errors.last_name = "Le nom est requis";
   if (!values.email) errors.email = "L'email est requis";
   else if (!isEmail(values.email)) errors.email = "Cet email n'est pas valide";
   if (!values.password) errors.password = "Le mot de passe est requis";
@@ -95,8 +91,6 @@ export default function RegisterPage() {
           <Formik
             initialValues={{
               username: "",
-              first_name: "",
-              last_name: "",
               email: "",
               password: "",
             }}
@@ -106,7 +100,9 @@ export default function RegisterPage() {
             {({ isSubmitting, status }: FormikProps<RegisterFormValues>) => (
               <Form className="grid gap-4">
                 <div className="grid gap-2">
-                  <Label htmlFor="username">Pseudo</Label>
+                  <Label htmlFor="username">
+                    Pseudo <span className="text-red-500">*</span>
+                  </Label>
                   <Field
                     id="username"
                     name="username"
@@ -115,45 +111,28 @@ export default function RegisterPage() {
                     as={Input}
                   />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="grid gap-2">
-                    <Label htmlFor="first_name">Prénom</Label>
-                    <Field
-                      id="first_name"
-                      name="first_name"
-                      placeholder="Prénom"
-                      required
-                      as={Input}
-                    />
-                  </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="last_name">Nom</Label>
-                    <Field
-                      id="last_name"
-                      name="last_name"
-                      placeholder="Nom"
-                      required
-                      as={Input}
-                    />
-                  </div>
-                </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email">
+                    Email <span className="text-red-500">*</span>
+                  </Label>
                   <Field
                     id="email"
                     name="email"
                     type="email"
-                    placeholder="prenom.nom@cevidentia.com"
+                    placeholder="prenom.nom@gmail.com"
                     required
                     as={Input}
                   />
                 </div>
                 <div className="grid gap-2">
-                  <Label htmlFor="password">Mot de passe</Label>
+                  <Label htmlFor="password">
+                    Mot de passe <span className="text-red-500">*</span>
+                  </Label>
                   <Field
                     id="password"
                     name="password"
                     type="password"
+                    placeholder="******"
                     required
                     as={Input}
                   />
@@ -176,6 +155,9 @@ export default function RegisterPage() {
             <Link href="/users/login" className="underline">
               Se connecter
             </Link>
+          </div>
+          <div className="mt-2 text-center text-xs text-gray-500">
+            <span className="text-red-500">*</span> Champs obligatoires
           </div>
         </CardContent>
       </Card>
