@@ -48,7 +48,7 @@ const QuizPage = () => {
             "Content-Type": "application/json",
           },
           credentials: "include",
-        }
+        },
       );
 
       const data: GameType = await response.json();
@@ -67,7 +67,7 @@ const QuizPage = () => {
   useEffect(() => {
     if (game && currentQuestionIndex < game.questions.length) {
       setShuffledAnswers(
-        shuffleArray(game.questions[currentQuestionIndex].answers)
+        shuffleArray(game.questions[currentQuestionIndex].answers),
       );
     }
   }, [currentQuestionIndex, game]);
