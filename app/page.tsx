@@ -36,7 +36,7 @@ export default function Home() {
     const shuffled = [...initialWords].sort(() => Math.random() - 0.5);
     setShuffledWords(shuffled);
 
-    const colors = ["#0174f4c4", "#2900d1a3"];
+    const colors = ["#2900d1a3", "#0174f4c4", "#0174f4c4", "#2900d1a3"];
     const randomColor = colors[Math.floor(Math.random() * colors.length)];
     setBgColor(randomColor);
   }, []);
