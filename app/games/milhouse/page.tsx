@@ -58,7 +58,7 @@ function Page() {
   };
 
   return (
-    <div className="w-full lg:grid lg:grid-cols-2 flex items-center justify-center min-h-screen bg-sky_blue">
+    <div className="w-full lg:grid-cols-2 flex items-center justify-center min-h-screen bg-sky_blue">
       {hasWon ? (
         <div className="p-6 pt-20 flex flex-col justify-center items-center h-screen z-30">
           <div className="w-200 h-200">
