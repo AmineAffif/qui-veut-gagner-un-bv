@@ -2,16 +2,18 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { StatisticType } from "@/types/StatisticType";
+import { StatisticResponse } from "@/types/StatisticType";
 import Lottie from "lottie-react";
 import loadingC from "public/loading_c.json";
 import { Button } from "@/components/ui/button";
 import PrivateRoute from "components/privateRoute";
+import { Trophy } from "lucide-react";
+import { Card } from "@/components/ui/card";
 
 const UserStatisticsPage = () => {
   const router = useRouter();
   const { id } = useParams();
-  const [statistics, setStatistics] = useState<StatisticType | null>(null);
+  const [statistics, setStatistics] = useState<StatisticResponse | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -31,6 +33,7 @@ const UserStatisticsPage = () => {
         if (response.ok) {
           const data = await response.json();
           setStatistics(data);
+          console.log("==================data: ", data);
         } else {
           console.error("Failed to fetch statistics");
         }
@@ -57,30 +60,37 @@ const UserStatisticsPage = () => {
       </div>
     );
 
+  const { global_score, rank } = statistics.statistic;
+  const { games_count, correct_answers_percentage } = statistics;
+
   return (
     <PrivateRoute>
       <div className="p-6 pt-24">
-        <h1 className="text-3xl font-bold mb-6">User Statistics</h1>
-        <div className="mb-4">
-          <label className="block text-gray-700">Global Score</label>
-          <input
-            type="text"
-            name="global_score"
-            value={statistics.global_score ?? ""}
-            disabled
-            className="w-full mt-2 p-2 border"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700">Rank</label>
-          <input
-            type="text"
-            name="rank"
-            value={statistics.rank}
-            disabled
-            className="w-full mt-2 p-2 border"
-          />
-        </div>
+        <h1 className="text-3xl font-bold mb-6 text-center">
+          Mes statistiques
+        </h1>
+        <Card className="w-full max-w-md bg-gray-900 text-white p-8 rounded-lg shadow-lg">
+          <div className="flex flex-col items-center">
+            <div className="text-6xl font-bold mb-2">{global_score ?? 0}</div>
+            <div className="text-lg text-gray-400 mb-6">Score global</div>
+            <div className="flex items-center text-gray-400 mb-8">
+              <Trophy className="w-5 h-5 mr-2" />
+              <span>Rang {rank ?? "Beginner"}</span>
+            </div>
+            <div className="grid grid-cols-2 gap-6 w-full">
+              <div className="bg-gray-800 p-4 rounded-lg">
+                <div className="text-2xl font-bold mb-1">{games_count}</div>
+                <div className="text-gray-400">Parties</div>
+              </div>
+              <div className="bg-gray-800 p-4 rounded-lg">
+                <div className="text-2xl font-bold mb-1">
+                  {correct_answers_percentage}%
+                </div>
+                <div className="text-gray-400">Bonnes réponses</div>
+              </div>
+            </div>
+          </div>
+        </Card>
       </div>
     </PrivateRoute>
   );

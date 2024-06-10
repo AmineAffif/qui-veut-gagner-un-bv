@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { GameType } from "@/types/GameType";
 import { AnswerType } from "@/types/AnswerType";
@@ -10,6 +10,7 @@ import { useAuth } from "@/context/AuthContext";
 import PrivateRoute from "components/privateRoute";
 import Lottie from "lottie-react";
 import loadingC from "public/loading_c.json";
+import Link from "next/link";
 
 const shuffleArray = (array: any[]) => {
   return array.sort(() => Math.random() - 0.5);
@@ -105,7 +106,47 @@ const QuizPage = () => {
   if (!game || currentQuestionIndex >= game.questions.length) {
     return (
       <div className="p-6 pt-20 flex justify-center items-center h-screen">
-        Fin de la partie. Votre score est {score}.
+        <div className="flex flex-col items-center justify-center h-[100dvh] dark:bg-gray-800 px-4 md:px-6">
+          <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
+            <div className="flex flex-col items-center space-y-6">
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-50">
+                Quiz terminé !
+              </h1>
+              <div className="flex items-center space-x-2 text-2xl font-bold">
+                <span>Score:</span>
+                <span className="text-green-500 dark:text-green-400">
+                  {score}
+                </span>
+                {game && <span>/ {game.questions.length}</span>}
+              </div>
+              <div className="grid grid-cols-2 gap-4 w-full">
+                <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 flex flex-col items-center">
+                  <span className="text-4xl font-bold text-green-500 dark:text-green-400">
+                    {score}
+                  </span>
+                  <span className="text-gray-500 dark:text-gray-400 text-center">
+                    Réponses correctes
+                  </span>
+                </div>
+                {game && (
+                  <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 flex flex-col items-center">
+                    <span className="text-4xl font-bold text-red-500 dark:text-red-400">
+                      {game.questions.length - score}
+                    </span>
+                    <span className="text-gray-500 dark:text-gray-400 text-center">
+                      Réponses incorrectes
+                    </span>
+                  </div>
+                )}
+              </div>
+              <div className="flex justify-center">
+                <Link href="/games/quiz">
+                  <Button>Relancer</Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -130,23 +171,26 @@ const QuizPage = () => {
   return (
     <PrivateRoute>
       <div className="p-6 pt-20 flex justify-center items-center h-screen w-[90vw] max-w-2xl">
-        <Card className="xs:pt-2 p-6 w-[100%]">
-          <div className="mb-4 flex justify-between pb-4">
-            <p className="text-left">{currentQuestion.text}</p>
-            <p className="text-right">{`${currentQuestionIndex + 1}/10`}</p>
-          </div>
-          <div className="grid gap-4 md:color-red-500">
-            {shuffledAnswers.map((answer) => (
-              <Button
-                key={`${answer.id}-${selectedAnswer}`}
-                variant="outline"
-                className={`whitespace-normal h-auto xs:hidden w-full ${selectedAnswer !== null ? "pointer-events-none" : ""} ${selectedAnswer === answer.id ? (isCorrect ? "bg-green-500 text-white" : "bg-red-500 text-white") : ""}`}
-                onClick={() => handleAnswerClick(answer.id)}
-              >
-                {answer.text}
-              </Button>
-            ))}
-          </div>
+        <Card className="w-full max-w-md">
+          <CardContent className="space-y-6 p-6">
+            <div className="space-y-2">
+              <h3 className="text-2xl font-bold">{currentQuestion.text}</h3>
+              <p className="text-gray-500 dark:text-gray-400">{`Question ${currentQuestionIndex + 1} / ${game.questions.length}`}</p>
+            </div>
+            <div className="grid gap-4 md:color-red-500">
+              {" "}
+              {shuffledAnswers.map((answer) => (
+                <Button
+                  key={`${answer.id}-${selectedAnswer}`}
+                  variant="outline"
+                  className={`whitespace-normal h-auto xs:hidden w-full ${selectedAnswer !== null ? "pointer-events-none" : ""} ${selectedAnswer === answer.id ? (isCorrect ? "bg-green-500 text-white" : "bg-red-500 text-white") : ""}`}
+                  onClick={() => handleAnswerClick(answer.id)}
+                >
+                  {answer.text}
+                </Button>
+              ))}
+            </div>
+          </CardContent>
         </Card>
       </div>
     </PrivateRoute>

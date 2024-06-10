@@ -3,8 +3,14 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
+import { Menu, BarChartBig } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -68,13 +74,41 @@ export default function Header() {
             {!loading && (
               <>
                 {isAuthenticated ? (
-                  <Button
-                    className="justify-self-end px-5 py-1 text-sm"
-                    variant="outline"
-                    onClick={logout}
-                  >
-                    Se déconnecter
-                  </Button>
+                  <>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Link href={`/users/${user?.id}/statistics`}>
+                            <Button
+                              className="justify-self-end px-5 py-1 text-sm"
+                              variant="outline"
+                            >
+                              <BarChartBig width={16} height={16} />
+                            </Button>
+                          </Link>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Statistiques</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+
+                    <Link href={`/users/${user?.id}`}>
+                      <Button
+                        className="justify-self-end px-5 py-1 text-sm"
+                        variant="outline"
+                      >
+                        Profil
+                      </Button>
+                    </Link>
+                    <Button
+                      className="justify-self-end px-5 py-1 text-sm"
+                      variant="outline"
+                      onClick={logout}
+                    >
+                      Se déconnecter
+                    </Button>
+                  </>
                 ) : (
                   <>
                     <Button

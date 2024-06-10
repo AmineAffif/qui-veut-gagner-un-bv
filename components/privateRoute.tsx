@@ -3,8 +3,11 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-import Lottie from "lottie-react";
+import dynamic from "next/dynamic";
 import loadingC from "public/loading_c.json";
+
+// Dynamically import Lottie to ensure it only loads on the client
+const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, loading } = useAuth();
