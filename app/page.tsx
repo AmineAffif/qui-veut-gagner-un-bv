@@ -50,7 +50,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center w-full">
+    <main className="flex min-h-[auto] md:min-h-screen flex-col items-center justify-center w-full">
       <div
         className={`flex min-h-screen flex-col items-center justify-center p-24 w-full`}
         style={{ backgroundColor: bgColor }}
@@ -133,7 +133,7 @@ export default function Home() {
 }
 
 function ChevronLeftIcon(
-  props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>,
+  props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>
 ) {
   return (
     <svg
@@ -154,7 +154,7 @@ function ChevronLeftIcon(
 }
 
 function ChevronRightIcon(
-  props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>,
+  props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>
 ) {
   return (
     <svg

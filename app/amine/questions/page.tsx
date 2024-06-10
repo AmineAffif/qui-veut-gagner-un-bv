@@ -30,7 +30,7 @@ const QuestionsPage = () => {
             "Content-Type": "application/json",
           },
           credentials: "include",
-        },
+        }
       );
       const data = await response.json();
       setQuestions(data);
@@ -44,7 +44,7 @@ const QuestionsPage = () => {
   };
 
   const filteredQuestions = questions.filter((question) =>
-    question.text.toLowerCase().includes(searchTerm.toLowerCase()),
+    question.text.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (

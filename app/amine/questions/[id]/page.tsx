@@ -26,7 +26,7 @@ const QuestionDetailPage = () => {
               "Content-Type": "application/json",
             },
             credentials: "include",
-          },
+          }
         );
 
         const data: QuestionType = await response.json();
@@ -64,7 +64,7 @@ const QuestionDetailPage = () => {
           },
           credentials: "include",
           body: JSON.stringify(updated_question_data),
-        },
+        }
       );
 
       if (response.ok) {
