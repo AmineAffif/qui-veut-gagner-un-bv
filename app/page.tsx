@@ -52,7 +52,7 @@ export default function Home() {
   return (
     <main className="flex min-h-[auto] md:min-h-screen flex-col items-center justify-center w-full">
       <div
-        className={`flex min-h-screen flex-col items-center justify-center p-24 w-full`}
+        className="flex min-h-screen flex-col items-center justify-center p-24 w-full"
         style={{ backgroundColor: bgColor }}
       >
         <div className="flex w-[80vw] justify-center h-full flex-col text-white">
