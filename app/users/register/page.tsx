@@ -70,7 +70,7 @@ export default function RegisterPage() {
       setSubmitting(true);
       const response = await register(values);
       authLogin(response.user); // Connexion automatique après l'inscription
-      router.push("/home"); // Redirection vers la page d'accueil
+      router.push(`/users/${response.user.id}`); // Redirection vers la page de l'utilisateur
     } catch (error: any) {
       setStatus({ error: error.message });
     } finally {

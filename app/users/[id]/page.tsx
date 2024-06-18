@@ -1,37 +1,39 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
+import { useRouter, useParams } from "next/navigation";
 import { UserType } from "@/types/UserType";
 import PrivateRoute from "components/privateRoute";
 import { useAuth } from "@/context/AuthContext";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 
-// Dynamically import Lottie to ensure it only loads on the client
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 const UserProfilePage = () => {
-  const router = useRouter();
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
   const [userData, setUserData] = useState<UserType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+  const { id } = useParams(); // Use useParams to get the user ID from the URL
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Ou tout autre composant de chargement
+  }
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated || !isLoading) {
       const fetchUser = async () => {
-        const token = localStorage.getItem("token");
         try {
           const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/current_user`,
+            `${process.env.NEXT_PUBLIC_API_URL}/users/${id}`, // Use the ID from the URL
             {
               method: "GET",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
               },
-              credentials: "include",
+              credentials: "include", // Ensure cookies are included in the request
             }
           );
 
@@ -53,11 +55,12 @@ const UserProfilePage = () => {
 
       fetchUser();
     } else {
+      router.push("/users/login");
       setLoading(false);
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, id, router]);
 
-  if (loading)
+  if (loading) {
     return (
       <div className="p-6 pt-20 flex flex-col justify-center items-center h-screen">
         <div className="w-20 h-20">
@@ -68,20 +71,23 @@ const UserProfilePage = () => {
         </div>
       </div>
     );
+  }
 
-  if (error)
+  if (error) {
     return (
       <div className="p-6 pt-20 flex justify-center items-center h-screen">
         <p>{error}</p>
       </div>
     );
+  }
 
-  if (!userData)
+  if (!userData) {
     return (
       <div className="p-6 pt-20 flex justify-center items-center h-screen">
         <p>No user data available</p>
       </div>
     );
+  }
 
   return (
     <PrivateRoute>
