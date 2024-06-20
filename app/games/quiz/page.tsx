@@ -11,6 +11,7 @@ import PrivateRoute from "components/privateRoute";
 import Lottie from "lottie-react";
 import loadingC from "public/loading_c.json";
 import winTrophy2 from "public/win_trophy_2.json";
+import "app/styles/quiz.css";
 
 const shuffleArray = (array: any[]) => {
   return array.sort(() => Math.random() - 0.5);
@@ -37,6 +38,7 @@ const QuizPage = () => {
   const [noMoreQuestions, setNoMoreQuestions] = useState(false);
   const { user } = useAuth();
   const [answers, setAnswers] = useState<{ [key: string]: number }>({});
+  const [shake, setShake] = useState(false); // État pour gérer l'animation de shake
 
   useEffect(() => {
     const incrementProgress = () => {
@@ -254,6 +256,9 @@ const QuizPage = () => {
         (prevScore) => prevScore + calculatePoints(currentQuestionIndex)
       );
       setCorrectCount((prevCount) => prevCount + 1); // Incrémentation du nombre de bonnes réponses
+    } else {
+      setShake(true); // Activer l'animation de shake
+      setTimeout(() => setShake(false), 200); // Désactiver l'animation de shake après 1 seconde
     }
 
     setAnswers((prevAnswers) => ({
@@ -271,7 +276,7 @@ const QuizPage = () => {
   return (
     <PrivateRoute>
       <div className="p-6 pt-20 flex justify-center items-center h-screen w-[90vw] max-w-2xl">
-        <Card className="w-full max-w-md">
+        <Card className={`w-full max-w-md ${shake ? "shake" : ""}`}>
           <CardContent className="space-y-6 p-6">
             <div className="space-y-2">
               <h3 className="text-2xl font-bold">{currentQuestion.text}</h3>
