@@ -26,6 +26,7 @@ const QuizPage = () => {
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
   const { user } = useAuth();
+  const [answers, setAnswers] = useState<{ [key: string]: number }>({});
 
   useEffect(() => {
     const incrementProgress = () => {
@@ -41,12 +42,18 @@ const QuizPage = () => {
     const interval = setInterval(incrementProgress, 50);
 
     const fetchGame = async () => {
+      const token = sessionStorage.getItem("token");
+      if (!token) {
+        throw new Error("No token found");
+      }
+
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/games/random_game`,
         {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           credentials: "include",
         }
@@ -54,10 +61,12 @@ const QuizPage = () => {
 
       const data: GameType = await response.json();
       setGame(data);
-      setShuffledAnswers(shuffleArray(data.questions[0].answers));
+      if (data.questions && data.questions.length > 0) {
+        setShuffledAnswers(shuffleArray(data.questions[0].answers));
+      }
       clearInterval(interval);
       setProgress(100);
-      setTimeout(() => setLoading(false), 500); // Add a slight delay to ensure progress bar reaches 100%
+      setTimeout(() => setLoading(false), 500);
     };
 
     fetchGame();
@@ -66,7 +75,11 @@ const QuizPage = () => {
   }, []);
 
   useEffect(() => {
-    if (game && currentQuestionIndex < game.questions.length) {
+    if (
+      game &&
+      game.questions &&
+      currentQuestionIndex < game.questions.length
+    ) {
       setShuffledAnswers(
         shuffleArray(game.questions[currentQuestionIndex].answers)
       );
@@ -74,24 +87,27 @@ const QuizPage = () => {
   }, [currentQuestionIndex, game]);
 
   useEffect(() => {
-    if (game && currentQuestionIndex >= game.questions.length && user) {
+    if (game && currentQuestionIndex >= game.questions?.length && user) {
       const saveGame = async () => {
+        const token = sessionStorage.getItem("token");
         await fetch(`${process.env.NEXT_PUBLIC_API_URL}/games`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           credentials: "include",
           body: JSON.stringify({
             user_id: user.id,
             score,
             question_ids: game.questions.map((q) => q.id),
+            answers,
           }),
         });
       };
       saveGame();
     }
-  }, [currentQuestionIndex, game, score, user]);
+  }, [currentQuestionIndex, game, score, user, answers]);
 
   if (loading) {
     return (
@@ -103,7 +119,11 @@ const QuizPage = () => {
     );
   }
 
-  if (!game || currentQuestionIndex >= game.questions.length) {
+  if (
+    !game ||
+    !game.questions ||
+    currentQuestionIndex >= game.questions.length
+  ) {
     return (
       <div className="p-6 pt-20 flex justify-center items-center h-screen">
         <div className="flex flex-col items-center justify-center h-[100dvh] dark:bg-gray-800 px-4 md:px-6">
@@ -117,7 +137,7 @@ const QuizPage = () => {
                 <span className="text-green-500 dark:text-green-400">
                   {score}
                 </span>
-                {game && <span>/ {game.questions.length}</span>}
+                {game && <span>/ {game.questions?.length}</span>}
               </div>
               <div className="grid grid-cols-2 gap-4 w-full">
                 <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 flex flex-col items-center">
@@ -131,7 +151,7 @@ const QuizPage = () => {
                 {game && (
                   <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 flex flex-col items-center">
                     <span className="text-4xl font-bold text-red-500 dark:text-red-400">
-                      {game.questions.length - score}
+                      {game.questions?.length - score}
                     </span>
                     <span className="text-gray-500 dark:text-gray-400 text-center">
                       Réponses incorrectes
@@ -140,9 +160,9 @@ const QuizPage = () => {
                 )}
               </div>
               <div className="flex justify-center">
-                <Link href="/games/quiz">
-                  <Button>Relancer</Button>
-                </Link>
+                <Button onClick={() => window.location.reload()}>
+                  Relancer
+                </Button>
               </div>
             </div>
           </div>
@@ -161,6 +181,11 @@ const QuizPage = () => {
       setScore(score + 1);
     }
 
+    setAnswers((prevAnswers) => ({
+      ...prevAnswers,
+      [currentQuestion.id as number]: answerId,
+    }));
+
     setTimeout(() => {
       setSelectedAnswer(null);
       setIsCorrect(null);
@@ -178,15 +203,26 @@ const QuizPage = () => {
               <p className="text-gray-500 dark:text-gray-400">{`Question ${currentQuestionIndex + 1} / ${game.questions.length}`}</p>
             </div>
             <div className="grid gap-4 md:color-red-500">
-              {" "}
+              <pre>
+                {" "}
+                {JSON.stringify(currentQuestion.right_answer_id, null, 2)}{" "}
+              </pre>
               {shuffledAnswers.map((answer) => (
                 <Button
                   key={`${answer.id}-${selectedAnswer}`}
                   variant="outline"
-                  className={`whitespace-normal h-auto xs:hidden w-full ${selectedAnswer !== null ? "pointer-events-none" : ""} ${selectedAnswer === answer.id ? (isCorrect ? "bg-green-500 text-white" : "bg-red-500 text-white") : ""}`}
+                  className={`whitespace-normal h-auto xs:hidden w-full ${
+                    selectedAnswer !== null ? "pointer-events-none" : ""
+                  } ${
+                    selectedAnswer === answer.id
+                      ? isCorrect
+                        ? "bg-green-500 text-white"
+                        : "bg-red-500 text-white"
+                      : ""
+                  }`}
                   onClick={() => handleAnswerClick(answer.id)}
                 >
-                  {answer.text}
+                  {answer.id}
                 </Button>
               ))}
             </div>
