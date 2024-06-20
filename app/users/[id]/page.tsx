@@ -26,12 +26,17 @@ const UserProfilePage = () => {
     if (isAuthenticated || !isLoading) {
       const fetchUser = async () => {
         try {
+          const token = sessionStorage.getItem("token"); // Récupérer le jeton du sessionStorage
+          if (!token) {
+            throw new Error("No token found");
+          }
           const response = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/users/${id}`, // Use the ID from the URL
             {
               method: "GET",
               headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`, // Envoyer le jeton dans l'en-tête Authorization
               },
               credentials: "include", // Ensure cookies are included in the request
             }

@@ -12,17 +12,17 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     if (token) {
       setIsAuthenticated(true);
-      setUser(JSON.parse(localStorage.getItem("user")));
+      setUser(JSON.parse(sessionStorage.getItem("user")));
     }
     setLoading(false);
   }, []);
 
   const login = (user) => {
-    localStorage.setItem("token", user.authentication_token);
-    localStorage.setItem("user", JSON.stringify(user));
+    sessionStorage.setItem("token", user.authentication_token);
+    sessionStorage.setItem("user", JSON.stringify(user));
     setIsAuthenticated(true);
     setUser(user);
   };
@@ -30,19 +30,19 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/admin_users/sign_out`,
+        `${process.env.NEXT_PUBLIC_API_URL}/users/sign_out`,
         {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
           },
           credentials: "include",
-        },
+        }
       );
 
       if (response.ok) {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("user");
         setIsAuthenticated(false);
         setUser(null);
       } else {
