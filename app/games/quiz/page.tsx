@@ -16,6 +16,14 @@ const shuffleArray = (array: any[]) => {
   return array.sort(() => Math.random() - 0.5);
 };
 
+const calculatePoints = (questionIndex: number) => {
+  if (questionIndex < 2) return 25;
+  if (questionIndex < 8) return 25;
+  if (questionIndex < 20) return 25;
+  if (questionIndex < 37) return 26.5;
+  return 50;
+};
+
 const QuizPage = () => {
   const [game, setGame] = useState<GameType | null>(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -23,6 +31,7 @@ const QuizPage = () => {
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [shuffledAnswers, setShuffledAnswers] = useState<AnswerType[]>([]);
   const [score, setScore] = useState(0);
+  const [correctCount, setCorrectCount] = useState(0); // Nouvelle variable pour le nombre de bonnes réponses
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
   const [noMoreQuestions, setNoMoreQuestions] = useState(false);
@@ -195,16 +204,16 @@ const QuizPage = () => {
                 Quiz terminé !
               </h1>
               <div className="flex items-center space-x-2 text-2xl font-bold">
-                <span>Score:</span>
+                <span>Points:</span>
                 <span className="text-green-500 dark:text-green-400">
                   {score}
                 </span>
-                {game && <span>/ {game.questions?.length}</span>}
               </div>
               <div className="grid grid-cols-2 gap-4 w-full">
                 <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 flex flex-col items-center">
                   <span className="text-4xl font-bold text-green-500 dark:text-green-400">
-                    {score}
+                    {correctCount}{" "}
+                    {/* Affichage du nombre de bonnes réponses */}
                   </span>
                   <span className="text-gray-500 dark:text-gray-400 text-center">
                     Réponses correctes
@@ -213,7 +222,8 @@ const QuizPage = () => {
                 {game && (
                   <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 flex flex-col items-center">
                     <span className="text-4xl font-bold text-red-500 dark:text-red-400">
-                      {game.questions?.length - score}
+                      {game.questions?.length - correctCount}{" "}
+                      {/* Affichage du nombre de mauvaises réponses */}
                     </span>
                     <span className="text-gray-500 dark:text-gray-400 text-center">
                       Réponses incorrectes
@@ -240,7 +250,10 @@ const QuizPage = () => {
     const correct = answerId === currentQuestion.right_answer_id;
     setIsCorrect(correct);
     if (correct) {
-      setScore(score + 1);
+      setScore(
+        (prevScore) => prevScore + calculatePoints(currentQuestionIndex)
+      );
+      setCorrectCount((prevCount) => prevCount + 1); // Incrémentation du nombre de bonnes réponses
     }
 
     setAnswers((prevAnswers) => ({
@@ -265,10 +278,6 @@ const QuizPage = () => {
               <p className="text-gray-500 dark:text-gray-400">{`Question ${currentQuestionIndex + 1} / ${game.questions.length}`}</p>
             </div>
             <div className="grid gap-4 md:color-red-500">
-              <pre>
-                {" "}
-                {JSON.stringify(currentQuestion.right_answer_id, null, 2)}{" "}
-              </pre>
               {shuffledAnswers.map((answer) => (
                 <Button
                   key={`${answer.id}-${selectedAnswer}`}
@@ -284,7 +293,7 @@ const QuizPage = () => {
                   }`}
                   onClick={() => handleAnswerClick(answer.id)}
                 >
-                  {answer.id}
+                  {answer.text}
                 </Button>
               ))}
             </div>
