@@ -10,7 +10,7 @@ import { useAuth } from "@/context/AuthContext";
 import PrivateRoute from "components/privateRoute";
 import Lottie from "lottie-react";
 import loadingC from "public/loading_c.json";
-import Link from "next/link";
+import winTrophy2 from "public/win_trophy_2.json";
 
 const shuffleArray = (array: any[]) => {
   return array.sort(() => Math.random() - 0.5);
@@ -25,6 +25,7 @@ const QuizPage = () => {
   const [score, setScore] = useState(0);
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
+  const [noMoreQuestions, setNoMoreQuestions] = useState(false);
   const { user } = useAuth();
   const [answers, setAnswers] = useState<{ [key: string]: number }>({});
 
@@ -60,9 +61,13 @@ const QuizPage = () => {
       );
 
       const data: GameType = await response.json();
-      setGame(data);
-      if (data.questions && data.questions.length > 0) {
-        setShuffledAnswers(shuffleArray(data.questions[0].answers));
+      if (data.questions.length === 0) {
+        setNoMoreQuestions(true);
+      } else {
+        setGame(data);
+        if (data.questions && data.questions.length > 0) {
+          setShuffledAnswers(shuffleArray(data.questions[0].answers));
+        }
       }
       clearInterval(interval);
       setProgress(100);
@@ -73,6 +78,31 @@ const QuizPage = () => {
 
     return () => clearInterval(interval);
   }, []);
+
+  const resetQuestions = async () => {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      throw new Error("No token found");
+    }
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/games/reset_questions`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        credentials: "include",
+      }
+    );
+
+    if (response.ok) {
+      window.location.reload();
+    } else {
+      console.error("Failed to reset questions");
+    }
+  };
 
   useEffect(() => {
     if (
@@ -114,6 +144,38 @@ const QuizPage = () => {
       <div className="p-6 pt-20 flex flex-col justify-center items-center h-screen">
         <div className="w-20 h-20">
           <Lottie animationData={loadingC} loop={true} />
+        </div>
+      </div>
+    );
+  }
+
+  if (noMoreQuestions) {
+    return (
+      <div className="p-6 pt-20 flex justify-center items-center h-screen">
+        <div className="flex flex-col items-center justify-center h-[100dvh] dark:bg-gray-800 px-4 md:px-6">
+          <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
+            <div className="flex flex-col items-center space-y-6">
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-50">
+                Point faible = Trop fort 😶
+              </h1>
+              <Lottie
+                animationData={winTrophy2}
+                loop={false}
+                className="animate-bounce mb-4"
+              />
+              <p className="text-gray-500 dark:text-gray-400 text-center">
+                Vous avez répondu correctement à toutes les questions
+                disponibles.
+              </p>
+              <p className="text-gray-500 dark:text-gray-400 text-center">
+                Mais vous pouvez recommencer en gardant votre score et vos
+                statistiques rassurez-vous.
+              </p>
+              <div className="flex justify-center">
+                <Button onClick={resetQuestions}>Recommencer</Button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
