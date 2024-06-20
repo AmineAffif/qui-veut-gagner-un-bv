@@ -69,6 +69,8 @@ export default function RegisterPage() {
     try {
       setSubmitting(true);
       const response = await register(values);
+      sessionStorage.setItem("token", response.token); // Stocker le token dans sessionStorage
+      sessionStorage.setItem("user", JSON.stringify(response.user)); // Stocker l'utilisateur dans sessionStorage
       authLogin(response.user); // Connexion automatique après l'inscription
       router.push(`/users/${response.user.id}`); // Redirection vers la page de l'utilisateur
     } catch (error: any) {
