@@ -43,6 +43,12 @@ export const AuthProvider = ({ children }) => {
       if (response.ok) {
         sessionStorage.removeItem("token");
         sessionStorage.removeItem("user");
+
+        document.cookie.split(";").forEach((cookie) => {
+          const [name] = cookie.split("=");
+          document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+        });
+    
         setIsAuthenticated(false);
         setUser(null);
       } else {
