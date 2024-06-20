@@ -7,8 +7,28 @@ import Lottie from "lottie-react";
 import loadingC from "public/loading_c.json";
 import { Button } from "@/components/ui/button";
 import PrivateRoute from "components/privateRoute";
-import { Trophy } from "lucide-react";
-import { Card } from "@/components/ui/card";
+import {
+  BookIcon,
+  CheckIcon,
+  DiamondIcon,
+  GamepadIcon,
+  MedalIcon,
+  PercentIcon,
+  RocketIcon,
+  StarIcon,
+  Trophy,
+  TrophyIcon,
+  UserIcon,
+  UsersIcon,
+  XIcon,
+} from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const UserStatisticsPage = () => {
   const router = useRouter();
@@ -64,9 +84,17 @@ const UserStatisticsPage = () => {
         <p>No statistics available</p>
       </div>
     );
+  const { global_score, rank_value } = statistics.statistic;
 
-  const { global_score, rank } = statistics.statistic;
-  const { games_count, correct_answers_percentage } = statistics;
+  const {
+    games_count,
+    total_questions_count,
+    correct_answers_count,
+    incorrect_answers_count,
+    correct_answers_percentage,
+    best_score,
+    average_score,
+  } = statistics;
 
   return (
     <PrivateRoute>
@@ -79,22 +107,127 @@ const UserStatisticsPage = () => {
             <div className="text-6xl font-bold mb-2">{global_score ?? 0}</div>
             <div className="text-lg text-gray-400 mb-6">Score global</div>
             <div className="flex items-center text-gray-400 mb-8">
-              <Trophy className="w-5 h-5 mr-2" />
-              <span>Rang {rank ?? "Beginner"}</span>
+              <Trophy className="w-5 h-5 mr-2 text-[#FFBB03]" />
+              <span>Rang {rank_value}</span>
             </div>
-            <div className="grid grid-cols-2 gap-6 w-full">
-              <div className="bg-gray-800 p-4 rounded-lg">
-                <div className="text-2xl font-bold mb-1">{games_count}</div>
-                <div className="text-gray-400">Parties</div>
-              </div>
-              <div className="bg-gray-800 p-4 rounded-lg">
-                <div className="text-2xl font-bold mb-1">
-                  {correct_answers_percentage}%
+            <div className="grid gap-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex flex-col items-center gap-1 bg-card rounded-lg p-4 bg-gradient-to-r  from-[#673AB7] to-[#9C27B0] text-white">
+                  <BookIcon className="h-8 w-8 text-white" />
+                  <div className="text-4xl font-bold">
+                    {total_questions_count}
+                  </div>
+                  <div className="text-sm">Questions répondues</div>
                 </div>
-                <div className="text-gray-400">Bonnes réponses</div>
+                <div className="flex flex-col items-center gap-1 bg-card rounded-lg p-4 bg-gradient-to-r from-[#03A9F4] to-[#00BCD4] text-white">
+                  <PercentIcon className="h-8 w-8 text-white" />
+                  <div className="text-4xl font-bold">
+                    {correct_answers_percentage}
+                  </div>
+                  <div className="text-sm">Taux de bonne réponse</div>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex flex-col items-center gap-1 bg-card rounded-lg p-4 bg-gradient-to-r  from-[#F44336] to-[#E91E63] text-white">
+                  <XIcon className="h-8 w-8 text-white" />
+                  <div className="text-4xl font-bold">
+                    {incorrect_answers_count}
+                  </div>
+                  <div className="text-sm">Mauvaises réponses</div>
+                </div>
+                <div className="flex flex-col items-center gap-1 bg-card rounded-lg p-4 bg-gradient-to-r from-[#4CAF50] to-[#8BC34A] text-white">
+                  <CheckIcon className="h-8 w-8 text-white" />
+                  <div className="text-4xl font-bold">
+                    {correct_answers_count}
+                  </div>
+                  <div className="text-sm">Bonnes réponses</div>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex flex-col items-center gap-1 bg-card rounded-lg p-4 bg-gradient-to-r from-[#FF9800] to-[#FFC107] text-white">
+                  <TrophyIcon className="h-8 w-8 text-white" />
+                  <div className="text-4xl font-bold">{best_score}</div>
+                  <div className="text-sm">Meilleur score</div>
+                </div>
+                <div className="flex flex-col items-center gap-1 bg-card rounded-lg p-4 bg-gradient-to-r from-[#9E9E9E] to-[#607D8B] text-white">
+                  <StarIcon className="h-8 w-8 text-white" />
+                  <div className="text-4xl font-bold">{average_score}</div>
+                  <div className="text-sm">Score moyen</div>
+                </div>
+              </div>
+              <div className="flex flex-col items-center gap-1 bg-card rounded-lg p-4 bg-gradient-to-r from-[#FF5722] to-[#795548] text-white">
+                <GamepadIcon className="h-8 w-8 text-white" />
+                <div className="text-4xl font-bold">{games_count}</div>
+                <div className="text-sm">Parties jouées</div>
               </div>
             </div>
           </div>
+
+          <section className="mt-8 bg-gradient-to-br from-[#8e2de2] to-[#4a00e0] p-6 rounded-lg">
+            <div className="max-w-md mx-auto grid gap-4">
+              <div className="flex items-center justify-between">
+                <div className="font-medium text-white flex items-center gap-2">
+                  <MedalIcon className="w-5 h-5" />
+                  Rangs
+                </div>
+              </div>
+              <div className="text-sm text-[#ccc]">
+                Voici les différents rangs
+              </div>
+              <div className="flex flex-col items-start gap-4">
+                <div className="flex items-center gap-2 w-[100%]">
+                  <div className="px-3 py-1 rounded-full bg-[#7feb8c] text-[#333] font-medium">
+                    0
+                  </div>
+                  <div className="text-white flex items-center gap-2 w-[100%]">
+                    <div className="h-px bg-[#ffffff45] w-full" />
+                    <UserIcon className="w-[1.9rem] h-[1.9rem]" />
+                    <p>Beginner</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 w-[100%]">
+                  <div className="px-3 py-1 rounded-full bg-[#2BCCFF] text-[#333] font-medium">
+                    51
+                  </div>
+                  <div className="text-white flex items-center gap-2 w-[100%]">
+                    <div className="h-px bg-[#ffffff45] w-full" />
+                    <UsersIcon className="w-[2.1rem] h-[2.1rem]" />
+                    <p>Intermediate</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 w-[100%]">
+                  <div className="px-3 py-1 rounded-full bg-[#fea238] text-[#333] font-medium">
+                    201
+                  </div>
+                  <div className="text-white flex items-center gap-2 w-[100%]">
+                    <div className="h-px bg-[#ffffff45] w-full" />
+                    <RocketIcon className="w-[1.8rem] h-[1.8rem]" />
+                    <p>Advanced</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 w-[100%]">
+                  <div className="px-3 py-1 rounded-full bg-[#FE3839] text-white font-medium">
+                    501
+                  </div>
+                  <div className="text-white flex items-center gap-2 w-[100%]">
+                    <div className="h-px bg-[#ffffff45] w-full" />
+                    <TrophyIcon className="w-[1.4rem] h-[1.4rem]" />
+                    <p className="whitespace-nowrap">Cevi Expert</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 w-[100%]">
+                  <div className="px-3 py-1 rounded-full bg-[#FCE83A] text-[#333] font-medium">
+                    951
+                  </div>
+                  <div className="text-white flex items-center gap-2 w-[100%]">
+                    <div className="h-px bg-[#ffffff45] w-full" />
+                    <DiamondIcon className="w-[1.4rem] h-[1.4rem]" />
+                    <p className="whitespace-nowrap">BV Master</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
         </Card>
       </div>
     </PrivateRoute>
