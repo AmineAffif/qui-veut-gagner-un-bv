@@ -34,27 +34,15 @@ const QuizPage = () => {
   const [score, setScore] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [progress, setProgress] = useState(0);
   const [noMoreQuestions, setNoMoreQuestions] = useState(false);
   const { user } = useAuth();
   const [answers, setAnswers] = useState<{ [key: string]: number }>({});
   const [shake, setShake] = useState(false);
+  const [progress, setProgress] = useState(0); // État pour gérer la progression de la barre
 
   const jsConfetti = new JSConfetti(); // Créer une instance de JSConfetti
 
   useEffect(() => {
-    const incrementProgress = () => {
-      setProgress((prevProgress) => {
-        if (prevProgress < 90) {
-          return prevProgress + 1;
-        } else {
-          return prevProgress;
-        }
-      });
-    };
-
-    const interval = setInterval(incrementProgress, 50);
-
     const fetchGame = async () => {
       const token = sessionStorage.getItem("token");
       if (!token) {
@@ -82,14 +70,10 @@ const QuizPage = () => {
           setShuffledAnswers(shuffleArray(data.questions[0].answers));
         }
       }
-      clearInterval(interval);
-      setProgress(100);
-      setTimeout(() => setLoading(false), 500);
+      setLoading(false);
     };
 
     fetchGame();
-
-    return () => clearInterval(interval);
   }, []);
 
   const resetQuestions = async () => {
@@ -126,6 +110,11 @@ const QuizPage = () => {
       setShuffledAnswers(
         shuffleArray(game.questions[currentQuestionIndex].answers)
       );
+    }
+    if (game && game.questions) {
+      const progressPercentage =
+        ((currentQuestionIndex + 1) / game.questions.length) * 100;
+      setProgress(progressPercentage);
     }
   }, [currentQuestionIndex, game]);
 
@@ -314,6 +303,12 @@ const QuizPage = () => {
             </div>
           </CardContent>
         </Card>
+      </div>
+      <div className="fixed bottom-0 left-0 w-full h-2 bg-gray-200">
+        <div
+          className="h-full bg-blue-500 transition-all duration-500"
+          style={{ width: `${progress}vw` }}
+        />
       </div>
     </PrivateRoute>
   );
