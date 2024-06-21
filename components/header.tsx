@@ -93,12 +93,21 @@ export default function Header() {
                         </TooltipContent>
                       </Tooltip>
                     </TooltipProvider>
-                    <Link
-                      href={`/top_players`}
-                      className={`justify-self-end px-5 py-1 text-sm ${buttonVariants({ variant: "outline" })}`}
-                    >
-                      <Trophy className="h-4 w-4" />
-                    </Link>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Link
+                            href={`/top_players`}
+                            className={`justify-self-end px-5 py-1 text-sm ${buttonVariants({ variant: "outline" })}`}
+                          >
+                            <Trophy className="h-4 w-4" />
+                          </Link>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Classement</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                     <Link
                       href={`/users/${user?.id}`}
                       className={`justify-self-end px-5 py-1 text-sm ${buttonVariants({ variant: "outline" })}`}
