@@ -7,6 +7,7 @@ import { UserType } from "@/types/UserType";
 import PrivateRoute from "components/privateRoute";
 import { useAuth } from "@/context/AuthContext";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
+import { motion } from "framer-motion";
 
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
@@ -96,50 +97,61 @@ const UserProfilePage = () => {
 
   return (
     <PrivateRoute>
-      <div className="p-6 pt-24">
-        <Card className="w-full max-w-md mx-auto">
-          <CardHeader className="bg-gray-950 text-white p-6 rounded-t-lg">
-            <div className="flex items-center gap-4">
-              <div>
-                <div className="text-xl font-bold">
-                  {userData.first_name} {userData.last_name}
-                </div>
-                <div className="text-sm text-gray-400">
-                  @{userData.username}
-                </div>
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent className="p-6 space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">
-                  Prénom
-                </div>
-                <div className="text-gray-900 dark:text-gray-100">
-                  {userData.first_name}
-                </div>
-              </div>
-              <div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">
-                  Nom
-                </div>
-                <div className="text-gray-900 dark:text-gray-100">
-                  {userData.last_name}
+      <motion.div
+        initial={{ opacity: 0.0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{
+          delay: 0.3,
+          duration: 0.8,
+          ease: "easeInOut",
+        }}
+        className="relative flex flex-col gap-4 items-center justify-center px-4"
+      >
+        <div className="p-6 pt-24">
+          <Card className="w-full max-w-md mx-auto">
+            <CardHeader className="bg-gray-950 text-white p-6 rounded-t-lg">
+              <div className="flex items-center gap-4">
+                <div>
+                  <div className="text-xl font-bold">
+                    {userData.first_name} {userData.last_name}
+                  </div>
+                  <div className="text-sm text-gray-400">
+                    @{userData.username}
+                  </div>
                 </div>
               </div>
-              <div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">
-                  Email
+            </CardHeader>
+            <CardContent className="p-6 space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                    Prénom
+                  </div>
+                  <div className="text-gray-900 dark:text-gray-100">
+                    {userData.first_name}
+                  </div>
                 </div>
-                <div className="text-gray-900 dark:text-gray-100">
-                  {userData.email}
+                <div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                    Nom
+                  </div>
+                  <div className="text-gray-900 dark:text-gray-100">
+                    {userData.last_name}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                    Email
+                  </div>
+                  <div className="text-gray-900 dark:text-gray-100">
+                    {userData.email}
+                  </div>
                 </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+            </CardContent>
+          </Card>
+        </div>
+      </motion.div>
     </PrivateRoute>
   );
 };
