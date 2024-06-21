@@ -108,12 +108,21 @@ export default function Header() {
                         </TooltipContent>
                       </Tooltip>
                     </TooltipProvider>
-                    <Link
-                      href={`/users/${user?.id}`}
-                      className={`justify-self-end px-5 py-1 text-sm ${buttonVariants({ variant: "outline" })}`}
-                    >
-                      <User className="h-4 w-4" />
-                    </Link>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Link
+                            href={`/users/${user?.id}`}
+                            className={`justify-self-end px-5 py-1 text-sm ${buttonVariants({ variant: "outline" })}`}
+                          >
+                            <User className="h-4 w-4" />
+                          </Link>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Profil</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                     <Button
                       className="justify-self-end px-5 py-1 text-sm"
                       variant="outline"
