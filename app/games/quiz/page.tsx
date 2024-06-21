@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { GameType } from "@/types/GameType";
 import { AnswerType } from "@/types/AnswerType";
 import { useAuth } from "@/context/AuthContext";
@@ -11,6 +10,7 @@ import PrivateRoute from "components/privateRoute";
 import Lottie from "lottie-react";
 import loadingC from "public/loading_c.json";
 import winTrophy2 from "public/win_trophy_2.json";
+import JSConfetti from "js-confetti";
 import "app/styles/quiz.css";
 
 const shuffleArray = (array: any[]) => {
@@ -32,13 +32,15 @@ const QuizPage = () => {
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [shuffledAnswers, setShuffledAnswers] = useState<AnswerType[]>([]);
   const [score, setScore] = useState(0);
-  const [correctCount, setCorrectCount] = useState(0); // Nouvelle variable pour le nombre de bonnes réponses
+  const [correctCount, setCorrectCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
   const [noMoreQuestions, setNoMoreQuestions] = useState(false);
   const { user } = useAuth();
   const [answers, setAnswers] = useState<{ [key: string]: number }>({});
-  const [shake, setShake] = useState(false); // État pour gérer l'animation de shake
+  const [shake, setShake] = useState(false);
+
+  const jsConfetti = new JSConfetti(); // Créer une instance de JSConfetti
 
   useEffect(() => {
     const incrementProgress = () => {
@@ -147,8 +149,16 @@ const QuizPage = () => {
         });
       };
       saveGame();
+
+      // Afficher les confettis si au moins 5 bonnes réponses
+      if (correctCount >= 5) {
+        jsConfetti.addConfetti({
+          emojis: ["🌈", "🎉", "✨", "💥"],
+          confettiNumber: 100,
+        });
+      }
     }
-  }, [currentQuestionIndex, game, score, user, answers]);
+  }, [currentQuestionIndex, game, score, user, answers, correctCount]);
 
   if (loading) {
     return (
@@ -214,8 +224,7 @@ const QuizPage = () => {
               <div className="grid grid-cols-2 gap-4 w-full">
                 <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 flex flex-col items-center">
                   <span className="text-4xl font-bold text-green-500 dark:text-green-400">
-                    {correctCount}{" "}
-                    {/* Affichage du nombre de bonnes réponses */}
+                    {correctCount}
                   </span>
                   <span className="text-gray-500 dark:text-gray-400 text-center">
                     Réponses correctes
@@ -224,8 +233,7 @@ const QuizPage = () => {
                 {game && (
                   <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 flex flex-col items-center">
                     <span className="text-4xl font-bold text-red-500 dark:text-red-400">
-                      {game.questions?.length - correctCount}{" "}
-                      {/* Affichage du nombre de mauvaises réponses */}
+                      {game.questions?.length - correctCount}
                     </span>
                     <span className="text-gray-500 dark:text-gray-400 text-center">
                       Réponses incorrectes
@@ -255,10 +263,10 @@ const QuizPage = () => {
       setScore(
         (prevScore) => prevScore + calculatePoints(currentQuestionIndex)
       );
-      setCorrectCount((prevCount) => prevCount + 1); // Incrémentation du nombre de bonnes réponses
+      setCorrectCount((prevCount) => prevCount + 1);
     } else {
-      setShake(true); // Activer l'animation de shake
-      setTimeout(() => setShake(false), 200); // Désactiver l'animation de shake après 1 seconde
+      setShake(true);
+      setTimeout(() => setShake(false), 200);
     }
 
     setAnswers((prevAnswers) => ({
@@ -280,7 +288,9 @@ const QuizPage = () => {
           <CardContent className="space-y-6 p-6">
             <div className="space-y-2">
               <h3 className="text-2xl font-bold">{currentQuestion.text}</h3>
-              <p className="text-gray-500 dark:text-gray-400">{`Question ${currentQuestionIndex + 1} / ${game.questions.length}`}</p>
+              <p className="text-gray-500 dark:text-gray-400">{`Question ${
+                currentQuestionIndex + 1
+              } / ${game.questions.length}`}</p>
             </div>
             <div className="grid gap-4 md:color-red-500">
               {shuffledAnswers.map((answer) => (
