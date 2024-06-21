@@ -23,7 +23,7 @@ export default function Header() {
     <div
       className="absolute w-full bg-white mx-auto px-4 md:px-6 lg:px-8 select-none z-10"
       style={{
-        background: "rgb(255 255 255 / 7%)",
+        background: "rgb(33 33 33)",
         backdropFilter: "blur(2px)",
       }}
     >
@@ -41,14 +41,14 @@ export default function Header() {
             } absolute top-16 left-0 w-full py-4 mt-4 md:mt-0 bg-white md:bg-transparent md:relative md:top-0 md:flex md:items-center md:justify-start md:w-full md:background-white`}
           >
             <Link
-              className="m-4 invert block mr-1 md:inline-block h-9 w-max items-center justify-center rounded-md bg-transparent text-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
+              className="m-4 block mr-1 md:inline-block h-9 w-max items-center justify-center rounded-md bg-transparent text-white px-4 py-2 text-sm font-medium transition-colors hover:bg-white hover:text-black focus:bg-white focus:text-black focus:outline-none disabled:pointer-events-none disabled:opacity-50"
               href="/"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               Home
             </Link>
             <Link
-              className="m-4 invert block mr-1 md:inline-block h-9 w-max items-center justify-center rounded-md bg-transparent text-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
+              className="m-4 block mr-1 md:inline-block h-9 w-max items-center justify-center rounded-md bg-transparent text-white px-4 py-2 text-sm font-medium transition-colors hover:bg-white hover:text-black focus:bg-white focus:text-black focus:outline-none disabled:pointer-events-none disabled:opacity-50"
               href="/games/milhouse"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
@@ -56,7 +56,7 @@ export default function Header() {
             </Link>
             {isAuthenticated && (
               <Link
-                className="m-4 invert block mr-1 md:inline-block h-9 w-max items-center justify-center rounded-md bg-transparent text-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
+                className="m-4 block mr-1 md:inline-block h-9 w-max items-center justify-center rounded-md bg-transparent text-white px-4 py-2 text-sm font-medium transition-colors hover:bg-white hover:text-black focus:bg-white focus:text-black focus:outline-none disabled:pointer-events-none disabled:opacity-50"
                 href="/games/quiz"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
@@ -65,7 +65,7 @@ export default function Header() {
             )}
             {user?.is_admin && (
               <Link
-                className="m-4 invert block mr-1 md:inline-block h-9 w-max items-center justify-center rounded-md bg-transparent text-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-gray-100/50 data-[state=open]:bg-gray-100/50 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus:bg-gray-800 dark:focus:text-gray-50 dark:data-[active]:bg-gray-800/50 dark:data-[state=open]:bg-gray-800/50"
+                className="m-4 block mr-1 md:inline-block h-9 w-max items-center justify-center rounded-md bg-transparent text-white px-4 py-2 text-sm font-medium transition-colors hover:bg-white hover:text-black focus:bg-white focus:text-black focus:outline-none disabled:pointer-events-none disabled:opacity-50"
                 href="/amine/dashboard"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
@@ -73,6 +73,7 @@ export default function Header() {
               </Link>
             )}
           </nav>
+
           <div className="ml-auto flex gap-2">
             {!loading && (
               <>
