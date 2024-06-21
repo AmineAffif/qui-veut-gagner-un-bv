@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/tooltip";
 import { User } from "lucide-react";
 
+import { buttonVariants } from "@/components/ui/button";
+
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isAuthenticated, user, logout, loading } = useAuth();
@@ -79,13 +81,11 @@ export default function Header() {
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <Link href={`/users/${user?.id}/statistics`}>
-                            <Button
-                              className="justify-self-end px-5 py-1 text-sm"
-                              variant="outline"
-                            >
-                              <BarChartBig width={16} height={16} />
-                            </Button>
+                          <Link
+                            href={`/users/${user?.id}/statistics`}
+                            className={`justify-self-end px-5 py-1 text-sm ${buttonVariants({ variant: "outline" })}`}
+                          >
+                            <BarChartBig width={16} height={16} />
                           </Link>
                         </TooltipTrigger>
                         <TooltipContent>
@@ -93,14 +93,11 @@ export default function Header() {
                         </TooltipContent>
                       </Tooltip>
                     </TooltipProvider>
-
-                    <Link href={`/users/${user?.id}`}>
-                      <Button
-                        className="justify-self-end px-5 py-1 text-sm"
-                        variant="outline"
-                      >
-                        <User className="h-4 w-4" />
-                      </Button>
+                    <Link
+                      href={`/users/${user?.id}`}
+                      className={`justify-self-end px-5 py-1 text-sm ${buttonVariants({ variant: "outline" })}`}
+                    >
+                      <User className="h-4 w-4" />
                     </Link>
                     <Button
                       className="justify-self-end px-5 py-1 text-sm"
@@ -112,15 +109,18 @@ export default function Header() {
                   </>
                 ) : (
                   <>
-                    <Button
-                      className="justify-self-end px-5 py-1 text-sm"
-                      variant="outline"
+                    <Link
+                      href="/users/login"
+                      className={`justify-self-end px-5 py-1 text-sm ${buttonVariants({ variant: "outline" })}`}
                     >
-                      <Link href="/users/login">Se connecter</Link>
-                    </Button>
-                    <Button className="justify-self-end px-5 py-1 text-sm">
-                      <Link href="/users/register">S'inscrire</Link>
-                    </Button>
+                      Se connecter
+                    </Link>
+                    <Link
+                      href="/users/register"
+                      className={`justify-self-end px-5 py-1 text-sm ${buttonVariants({ variant: "default" })}`}
+                    >
+                      S'inscrire
+                    </Link>
                   </>
                 )}
               </>
