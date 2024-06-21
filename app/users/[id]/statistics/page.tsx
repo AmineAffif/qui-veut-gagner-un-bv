@@ -21,13 +21,7 @@ import {
   UsersIcon,
   XIcon,
 } from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 
 import { motion } from "framer-motion";
 

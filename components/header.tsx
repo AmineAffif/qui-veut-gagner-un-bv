@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Menu, BarChartBig } from "lucide-react";
+import { Menu, BarChartBig, Trophy } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import {
   Tooltip,
@@ -93,6 +93,12 @@ export default function Header() {
                         </TooltipContent>
                       </Tooltip>
                     </TooltipProvider>
+                    <Link
+                      href={`/top_players`}
+                      className={`justify-self-end px-5 py-1 text-sm ${buttonVariants({ variant: "outline" })}`}
+                    >
+                      <Trophy className="h-4 w-4" />
+                    </Link>
                     <Link
                       href={`/users/${user?.id}`}
                       className={`justify-self-end px-5 py-1 text-sm ${buttonVariants({ variant: "outline" })}`}
