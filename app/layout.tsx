@@ -22,7 +22,7 @@ export default function RootLayout({
       <AuthProvider>
         <body className={inter.className}>
           <Header />
-          <div className="z-0 w-full dark:bg-black dark:bg-dot-white/[0.2] bg-dot-black/[0.2] relative flex items-center justify-center">
+          <div className="h-auto  min-h-screen items-baseline z-0 w-full dark:bg-black dark:bg-dot-white/[0.2] bg-dot-black/[0.2] relative flex justify-center">
             {children}
             <SpeedInsights />
           </div>
