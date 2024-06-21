@@ -45,9 +45,9 @@ const login = async (values: LoginFormValues) => {
   if (!response.ok) {
     let error = "Une erreur est survenue";
     try {
-      const data = await response.text();
-      if (data === "Invalid Email or password.") {
-        error = "Email, pseudo ou mot de passe invalide";
+      const data = await response.json();
+      if (data.error === "Invalid login or password") {
+        error = "Login ou mot de passe incorrect";
       }
     } catch (e) {
       // Si la réponse n'est pas un texte valide, on garde le message d'erreur par défaut
@@ -73,7 +73,7 @@ export default function LoginPage() {
       console.log("response.user = ", response.user);
 
       authLogin(response.user); // Utiliser les informations de l'utilisateur renvoyées par la réponse
-      router.push("/home");
+      router.push("/games/quiz");
     } catch (error: any) {
       setStatus({ error: error.message });
     } finally {
