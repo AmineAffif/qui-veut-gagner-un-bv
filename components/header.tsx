@@ -21,9 +21,9 @@ export default function Header() {
 
   return (
     <div
-      className="absolute w-full bg-white mx-auto px-4 md:px-6 lg:px-8 select-none z-10"
+      className="absolute w-full mx-auto px-4 md:px-6 lg:px-8 select-none z-10"
       style={{
-        background: "rgb(33 33 33)",
+        background: "#161616de",
         backdropFilter: "blur(2px)",
       }}
     >
