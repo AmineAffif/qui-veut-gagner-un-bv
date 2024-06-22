@@ -10,6 +10,8 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "@/components/ui/carousel";
+import Link from "next/link";
+import { buttonVariants } from "@/components/ui/button";
 
 export default function Home() {
   const WordWithSpace = ({
@@ -119,6 +121,32 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <section className="w-full py-12 md:py-24 lg:py-32">
+        <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-2 lg:gap-10">
+          <img
+            src="/montages/album-cover.webp"
+            width={600}
+            height={600}
+            alt="Image"
+            className="mx-auto aspect-[3/2] overflow-hidden rounded-lg object-contain"
+          />
+          <div className="space-y-4">
+            <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+              QVGDB
+            </h2>
+            <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              Découvrez l'album <strong>QVGDB</strong> : une immersion musicale
+              captivante où chaque note raconte une histoire. Plongez dans les
+              sonorités uniques et rythmes envoûtants de cette expérience
+              auditive ultime
+            </p>
+            <p className="max-w-[600px] text-[#c1c1ce] text-sm/relaxed">
+              L'album n'existe pas{" "}
+            </p>
+          </div>
+        </div>
+      </section>
+
       <div className="flex h-auto flex-col items-center justify-center w-full bg-custom-gray">
         <img
           src="/montages/long_banner.jpg"
@@ -128,6 +156,79 @@ export default function Home() {
           className="h-[500px] max-w-[100vw] object-cover md:object-contain rounded-xl"
         />
       </div>
+
+      <section className="w-full py-12 md:py-24 lg:py-32">
+        <div className="container grid items-center gap-6 px-12 md:px-24 lg:grid-cols-3 lg:gap-10">
+          <div className="lg:col-span-2 space-y-4">
+            <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+              Sac à vomi
+            </h2>
+            <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              Découvrez LE sac à vomi à gagner ! Parfait pour les escapades
+              imprévisibles et les soirées mémorables. Ce sac revisite un
+              accessoire indispensable en un élément de surprise et d'amusement,
+              prêt à vous accompagner partout.
+            </p>
+          </div>
+          <img
+            src="/montages/sac.webp"
+            alt="Image"
+            className="h-[60vh] w-[60vh] mx-auto aspect-[3/2] overflow-hidden rounded-lg object-contain"
+          />
+        </div>
+      </section>
+
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-custom-gray">
+        <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-3 lg:gap-10">
+          <img
+            src="/montages/book-amine_1_17.webp"
+            width={600}
+            height={600}
+            alt="Image"
+            className="mx-auto aspect-[3/2] overflow-hidden rounded-lg object-contain"
+          />
+          <div className="space-y-4">
+            <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight text-white">
+              Cévi bloc-note
+            </h2>
+            <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              Gagnez un bloc-notes magique capable de réaliser vos souhaits les
+              plus chers ! Notez vos désirs et laissez la magie faire le reste.
+              Un compagnon idéal pour ceux qui aiment rêver grand et voir leurs
+              rêves devenir réalité.
+            </p>
+            <p className="max-w-[600px] text-[#c1c1ce] text-sm/relaxed">
+              Aucune magie garantie 🫖
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="w-full py-12 md:py-24 lg:py-32">
+        <div className="container grid items-center gap-6 px-12 md:px-24 lg:grid-cols-3 lg:gap-10">
+          <div className="lg:col-span-2 space-y-4">
+            <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+              Un jeu gardé secret durant des siècles 🤫
+            </h2>
+            <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              Protégé par des générations, ce jeu incroyable a été caché pendant
+              des siècles. Maintenant, il est enfin révélé, vous offrant une
+              chance unique de plonger dans son univers mystérieux et fascinant.
+            </p>
+            <Link
+              className={`justify-self-end px-5 py-1 text-sm ${buttonVariants({ variant: "default" })}`}
+              href="/games/quiz"
+            >
+              Jouer maintenant
+            </Link>
+          </div>
+          <img
+            src="/montages/secret-montage.webp"
+            alt="Image"
+            className="h-[60vh] w-[60vh] mx-auto aspect-[3/2] overflow-hidden rounded-lg object-contain"
+          />
+        </div>
+      </section>
     </main>
   );
 }
