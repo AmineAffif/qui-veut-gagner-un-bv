@@ -1,9 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import useToast from "@radix-ui/react-toast";
 
-import { toast } from "@radix-ui/react-toast";
+import { toast, useToast } from "@/components/ui/use-toast";
 export function ToastSimple() {
   return (
     <Button
