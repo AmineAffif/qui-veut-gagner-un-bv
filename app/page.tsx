@@ -152,7 +152,7 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="flex h-auto flex-col items-center justify-center w-full bg-custom-gray">
+      <div className="flex h-auto flex-col items-center justify-center w-full">
         <img
           src="/montages/long_banner.jpg"
           alt=""
