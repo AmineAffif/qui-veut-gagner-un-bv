@@ -8,6 +8,7 @@ import PrivateRoute from "components/privateRoute";
 import { useAuth } from "@/context/AuthContext";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import UploadAvatar from "components/avatar";
 
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
@@ -17,29 +18,29 @@ const UserProfilePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
-  const { id } = useParams(); // Use useParams to get the user ID from the URL
+  const { id } = useParams();
 
   if (isLoading) {
-    return <div>Loading...</div>; // Ou tout autre composant de chargement
+    return <div>Loading...</div>;
   }
 
   useEffect(() => {
     if (isAuthenticated || !isLoading) {
       const fetchUser = async () => {
         try {
-          const token = sessionStorage.getItem("token"); // Récupérer le jeton du sessionStorage
+          const token = sessionStorage.getItem("token");
           if (!token) {
             throw new Error("No token found");
           }
           const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/users/${id}`, // Use the ID from the URL
+            `${process.env.NEXT_PUBLIC_API_URL}/users/${id}`,
             {
               method: "GET",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`, // Envoyer le jeton dans l'en-tête Authorization
+                Authorization: `Bearer ${token}`,
               },
-              credentials: "include", // Ensure cookies are included in the request
+              credentials: "include",
             }
           );
 
@@ -111,6 +112,10 @@ const UserProfilePage = () => {
           <Card className="w-full max-w-md mx-auto">
             <CardHeader className="bg-gray-950 text-white p-6 rounded-t-lg">
               <div className="flex items-center gap-4">
+                <UploadAvatar
+                  userId={userData.id}
+                  initialAvatarUrl={userData.avatar || ""}
+                />
                 <div>
                   <div className="text-xl font-bold">
                     {userData.first_name} {userData.last_name}

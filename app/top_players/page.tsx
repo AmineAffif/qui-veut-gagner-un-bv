@@ -7,20 +7,10 @@ import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import loadingC from "public/loading_c.json";
 import Lottie from "lottie-react";
-
-interface User {
-  id: number;
-  username: string;
-  avatar_url: string | null;
-}
-
-interface Statistic {
-  global_score: number;
-  user: User;
-}
+import { StatisticType } from "@/types/StatisticType";
 
 const TopPlayersPage = () => {
-  const [topPlayers, setTopPlayers] = useState<Statistic[]>([]);
+  const [topPlayers, setTopPlayers] = useState<StatisticType[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -107,7 +97,7 @@ const TopPlayersPage = () => {
                   >
                     <Avatar className="w-16 h-16">
                       <AvatarImage
-                        src={player.user.avatar_url || "/placeholder-user.jpg"}
+                        src={player.user.avatar || "/placeholder-user.jpg"}
                       />
                       <AvatarFallback>P{index + 1}</AvatarFallback>
                     </Avatar>

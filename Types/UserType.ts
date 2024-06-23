@@ -6,4 +6,5 @@ export type UserType = {
   last_name: string;
   created_at: string;
   updated_at: string;
+  avatar: string | null;
 };

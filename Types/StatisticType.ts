@@ -1,7 +1,10 @@
+import { UserType } from "./UserType";
+
 export interface StatisticType {
   id: number;
   global_score: number;
   rank_value: string;
+  user: UserType
 }
 
 export interface StatisticResponse {
