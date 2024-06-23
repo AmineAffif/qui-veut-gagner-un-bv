@@ -184,13 +184,11 @@ export default function Home() {
       </section>
 
       <section className="w-full py-12 md:py-24 lg:py-32 bg-custom-gray">
-        <div className="container grid items-center gap-6 px-4 md:px-6 lg:grid-cols-3 lg:gap-10">
+        <div className="container flex flex-wrap md:flex-wrap justify-center items-center gap-6 px-4 md:px-6 lg:gap-10">
           <img
             src="/montages/book-amine_1_17.webp"
-            width={600}
-            height={600}
             alt="Image"
-            className="mx-auto aspect-[3/2] overflow-hidden rounded-lg object-contain"
+            className="overflow-hidden rounded-lg object-contain md:w-[380px]"
           />
           <div className="space-y-4">
             <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight text-white">
