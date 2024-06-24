@@ -113,7 +113,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-[auto] md:min-h-screen flex-col items-center justify-center w-full">
+    <main className="flex min-h-[auto] md:min-h-screen flex-col items-center justify-center w-full overflow-x-hidden">
       <div
         className="flex min-h-screen flex-col items-center justify-center p-24 w-full"
         style={{ backgroundColor: bgColor }}
@@ -136,39 +136,43 @@ export default function Home() {
             <Carousel className="rounded-lg overflow-hidden">
               <CarouselContent>
                 <CarouselItem className="flex justify-center">
-                  <img
+                  <Image
                     src="/montages/dvd_montage.jpg"
                     alt="Carousel Image 1"
                     width={1200}
                     height={800}
                     className="w-auto h-[500px] object-contain rounded-xl"
+                    loading="lazy"
                   />
                 </CarouselItem>
                 <CarouselItem className="flex justify-center">
-                  <img
+                  <Image
                     src="/montages/jeu_de_societe.jpg"
                     alt="Carousel Image 2"
                     width={1200}
                     height={800}
                     className="w-auto h-[500px] object-contain rounded-xl"
+                    loading="lazy"
                   />
                 </CarouselItem>
                 <CarouselItem className="flex justify-center">
-                  <img
+                  <Image
                     src="/montages/montage_ps1.jpg"
                     alt="Carousel Image 3"
                     width={1200}
                     height={800}
                     className="w-auto h-[500px] object-contain rounded-xl"
+                    loading="lazy"
                   />
                 </CarouselItem>
                 <CarouselItem className="flex justify-center">
-                  <img
+                  <Image
                     src="/montages/switch.jpg"
                     alt="Carousel Image 4"
                     width={1200}
                     height={800}
                     className="w-auto h-[500px] object-contain rounded-xl"
+                    loading="lazy"
                   />
                 </CarouselItem>
               </CarouselContent>
@@ -194,12 +198,13 @@ export default function Home() {
             }}
             className="relative flex flex-col gap-4 items-center justify-center"
           >
-            <img
+            <Image
               src="/montages/album-cover.webp"
               width={600}
               height={600}
               alt="Image"
               className="mx-auto aspect-[2/2] md:aspect-[inherit] overflow-hidden rounded-lg object-contain"
+              loading="lazy"
             />
           </motion.div>
           <motion.div
@@ -243,7 +248,7 @@ export default function Home() {
                 alt="choose_audio"
                 width={250}
                 height={250}
-                className="absolute z-3 select-none w-[210px] md:w-[250px] top-[-130px] md:top-[-120px] right-[-25px] md:right-[60px] object-contain rotate-[-30deg] md:rotate-0"
+                className="absolute z-3 select-none w-[210px] md:w-[250px] top-[-130px] md:top-[-120px] right-[-25px] md:right-[60px] object-contain rotate-[40deg] md:rotate-0"
               />
               <video
                 ref={videoRef}
@@ -288,12 +293,13 @@ export default function Home() {
       </section>
 
       <div className="flex h-auto flex-col items-center justify-center w-full">
-        <img
+        <Image
           src="/montages/long_banner.jpg"
           alt=""
-          width={""}
-          height={""}
+          width={1920}
+          height={500}
           className="h-[500px] max-w-[100vw] object-cover md:object-contain rounded-xl"
+          loading="lazy"
         />
       </div>
 
@@ -320,10 +326,13 @@ export default function Home() {
             }}
             className="relative flex flex-col gap-4 items-center justify-center"
           >
-            <img
+            <Image
               src="/montages/sac.webp"
               alt="Image"
+              width={600}
+              height={600}
               className="h-[60vh] w-[60vh] mx-auto aspect-[3/2] overflow-hidden rounded-lg object-contain"
+              loading="lazy"
             />
           </motion.div>
         </div>
@@ -331,10 +340,13 @@ export default function Home() {
 
       <section className="w-full py-12 md:py-24 lg:py-32 bg-custom-gray">
         <div className="container flex flex-wrap md:flex-wrap justify-center items-center gap-6 px-4 md:px-6 lg:gap-10">
-          <img
+          <Image
             src="/montages/book-amine_1_17.webp"
             alt="Image"
+            width={380}
+            height={500}
             className="overflow-hidden rounded-lg object-contain md:w-[380px]"
+            loading="lazy"
           />
           <div className="space-y-4">
             <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight text-white">
@@ -373,10 +385,13 @@ export default function Home() {
               Jouer maintenant
             </Link>
           </div>
-          <img
+          <Image
             src="/montages/secret-montage.webp"
             alt="Image"
+            width={600}
+            height={600}
             className="h-[60vh] w-[60vh] mx-auto overflow-hidden rounded-lg object-cover"
+            loading="lazy"
           />
         </div>
       </section>
