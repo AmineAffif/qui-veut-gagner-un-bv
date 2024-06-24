@@ -1,8 +1,10 @@
 "use client";
 
-import { JSX, SVGProps, useEffect, useState } from "react";
+import { JSX, SVGProps, useEffect, useRef, useState } from "react";
 import { FlipWords } from "@/components/ui/flip-words";
 import { motion } from "framer-motion";
+import { VolumeX, Volume2 } from "lucide-react";
+import Image from "next/image";
 
 import {
   Carousel,
@@ -12,7 +14,7 @@ import {
   CarouselNext,
 } from "@/components/ui/carousel";
 import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 export default function Home() {
   const WordWithSpace = ({
@@ -51,6 +53,64 @@ export default function Home() {
     const randomColor = colors[Math.floor(Math.random() * colors.length)];
     setBgColor(randomColor);
   }, []);
+
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const audio1Ref = useRef<HTMLAudioElement>(null);
+  const audio2Ref = useRef<HTMLAudioElement>(null);
+
+  const [isAudio1Muted, setIsAudio1Muted] = useState(false);
+  const [isAudio2Muted, setIsAudio2Muted] = useState(false);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    const audio1 = audio1Ref.current;
+    const audio2 = audio2Ref.current;
+
+    const handlePlay = () => {
+      if (audio1 && audio2) {
+        audio1.play();
+        audio2.play();
+      }
+    };
+
+    const handlePause = () => {
+      if (audio1 && audio2) {
+        audio1.pause();
+        audio2.pause();
+      }
+    };
+
+    const handleSeeked = () => {
+      if (audio1 && audio2 && video) {
+        audio1.currentTime = video.currentTime;
+        audio2.currentTime = video.currentTime;
+      }
+    };
+
+    if (video) {
+      video.addEventListener("play", handlePlay);
+      video.addEventListener("pause", handlePause);
+      video.addEventListener("seeked", handleSeeked);
+    }
+
+    return () => {
+      if (video) {
+        video.removeEventListener("play", handlePlay);
+        video.removeEventListener("pause", handlePause);
+        video.removeEventListener("seeked", handleSeeked);
+      }
+    };
+  }, []);
+
+  const toggleMute = (
+    audioRef: React.RefObject<HTMLAudioElement>,
+    setIsMuted: React.Dispatch<React.SetStateAction<boolean>>
+  ) => {
+    if (audioRef.current) {
+      audioRef.current.muted = !audioRef.current.muted;
+      setIsMuted(audioRef.current.muted);
+    }
+  };
 
   return (
     <main className="flex min-h-[auto] md:min-h-screen flex-col items-center justify-center w-full">
@@ -175,11 +235,54 @@ export default function Home() {
               duration: 0.6,
               ease: "easeInOut",
             }}
-            className="relative flex flex-col gap-4 items-center justify-center"
+            className="relative flex flex-col gap-4 items-center justify-center mt-12 md:mt-0"
           >
-            <video controls className="w-auto md:w-[280px] rounded-lg">
-              <source src="/react_cev_hit.mp4" type="video/mp4" />
-            </video>
+            <div className="relative w-full max-w-4xl mx-auto rounded-lg">
+              <Image
+                src="/choose_audio-min.png"
+                alt="choose_audio"
+                width={250}
+                height={250}
+                className="absolute z-3 select-none w-[210px] md:w-[250px] top-[-130px] md:top-[-120px] right-[-25px] md:right-[60px] object-contain rotate-[-30deg] md:rotate-0"
+              />
+              <video
+                ref={videoRef}
+                controls
+                className="w-auto md:w-[580px] rounded-lg"
+              >
+                <source src="/video/video_no_sound.mp4" type="video/mp4" />
+              </video>
+              <audio ref={audio1Ref} src="/sound/music_track.mp3" />
+              <audio ref={audio2Ref} src="/sound/react_track.mp3" />
+              <div className="absolute top-4 right-4 flex items-center gap-2">
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="w-100 h-100 bg-black/50 hover:text-[#006aff] text-white px-3 py-1"
+                  onClick={() => toggleMute(audio1Ref, setIsAudio1Muted)}
+                >
+                  {isAudio1Muted ? (
+                    <VolumeX className="w-6 h-6" />
+                  ) : (
+                    <Volume2 className="w-6 h-6" />
+                  )}
+                  <p className="ml-2">Musique</p>
+                </Button>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="w-100 h-100 bg-black/50 hover:text-[#006aff] text-white px-3 py-1"
+                  onClick={() => toggleMute(audio2Ref, setIsAudio2Muted)}
+                >
+                  {isAudio2Muted ? (
+                    <VolumeX className="w-6 h-6" />
+                  ) : (
+                    <Volume2 className="w-6 h-6" />
+                  )}
+                  <p className="ml-2">React</p>
+                </Button>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -262,7 +365,9 @@ export default function Home() {
               chance unique de plonger dans son univers mystérieux et fascinant.
             </p>
             <Link
-              className={`justify-self-end px-5 py-1 text-sm ${buttonVariants({ variant: "default" })}`}
+              className={`justify-self-end px-5 py-1 text-sm ${buttonVariants({
+                variant: "default",
+              })}`}
               href="/games/quiz"
             >
               Jouer maintenant
