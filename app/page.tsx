@@ -251,6 +251,7 @@ export default function Home() {
                 className="absolute z-3 select-none w-[210px] md:w-[250px] top-[-130px] md:top-[-120px] right-[-25px] md:right-[60px] object-contain rotate-[40deg] md:rotate-0"
               />
               <video
+                loop
                 ref={videoRef}
                 controls
                 className="w-auto md:w-[580px] rounded-lg"
