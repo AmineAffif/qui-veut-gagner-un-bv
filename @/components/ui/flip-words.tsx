@@ -67,7 +67,7 @@ export const FlipWords: React.FC<FlipWordsProps> = ({
         }}
         className={cn(
           "z-10 inline-block relative text-left text-neutral-900 dark:text-neutral-100 px-2",
-          className,
+          className
         )}
         key={words.indexOf(currentWord)}
       >

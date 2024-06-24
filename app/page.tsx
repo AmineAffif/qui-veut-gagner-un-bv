@@ -2,7 +2,8 @@
 
 import { JSX, SVGProps, useEffect, useState } from "react";
 import { FlipWords } from "@/components/ui/flip-words";
-import Image from "next/image";
+import { motion } from "framer-motion";
+
 import {
   Carousel,
   CarouselContent,
@@ -11,9 +12,7 @@ import {
   CarouselNext,
 } from "@/components/ui/carousel";
 import Link from "next/link";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { Play, Volume2, Maximize2 } from "lucide-react";
-import { Slider } from "@/components/ui/slider";
+import { buttonVariants } from "@/components/ui/button";
 
 export default function Home() {
   const WordWithSpace = ({
@@ -125,30 +124,63 @@ export default function Home() {
       </div>
       <section className="w-full py-12 md:py-24 lg:py-32">
         <div className="container flex items-center gap-6 px-4 md:px-6 lg:gap-10 flex-wrap md:flex-nowrap">
-          <img
-            src="/montages/album-cover.webp"
-            width={600}
-            height={600}
-            alt="Image"
-            className="mx-auto aspect-[2/2] md:aspect-[inherit] overflow-hidden rounded-lg object-contain"
-          />
-          <div className="space-y-4">
-            <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-              QVGDB
-            </h2>
-            <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Découvrez l'album <strong>QVGDB</strong> : une immersion musicale
-              captivante où chaque note raconte une histoire. Plongez dans les
-              sonorités uniques et rythmes envoûtants de cette expérience
-              auditive ultime
-            </p>
-            <p className="max-w-[600px] text-[#c1c1ce] text-sm/relaxed">
-              L'album n'existe pas{" "}
-            </p>
-          </div>
-          <video controls className="w-auto md:w-[280px]">
-            <source src="/react_cev_hit.mp4" type="video/mp4" />
-          </video>
+          <motion.div
+            initial={{ opacity: 0.0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 0.3,
+              duration: 0.6,
+              ease: "easeInOut",
+            }}
+            className="relative flex flex-col gap-4 items-center justify-center"
+          >
+            <img
+              src="/montages/album-cover.webp"
+              width={600}
+              height={600}
+              alt="Image"
+              className="mx-auto aspect-[2/2] md:aspect-[inherit] overflow-hidden rounded-lg object-contain"
+            />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0.0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 0.6,
+              duration: 0.6,
+              ease: "easeInOut",
+            }}
+            className="relative flex flex-col gap-4 items-center justify-center"
+          >
+            <div className="space-y-4">
+              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+                QVGDB
+              </h2>
+              <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                Découvrez l'album <strong>QVGDB</strong> : une immersion
+                musicale captivante où chaque note raconte une histoire. Plongez
+                dans les sonorités uniques et rythmes envoûtants de cette
+                expérience auditive ultime
+              </p>
+              <p className="max-w-[600px] text-[#c1c1ce] text-sm/relaxed">
+                L'album n'existe pas{" "}
+              </p>
+            </div>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0.0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{
+              delay: 1.2,
+              duration: 0.6,
+              ease: "easeInOut",
+            }}
+            className="relative flex flex-col gap-4 items-center justify-center"
+          >
+            <video controls className="w-auto md:w-[280px] rounded-lg">
+              <source src="/react_cev_hit.mp4" type="video/mp4" />
+            </video>
+          </motion.div>
         </div>
       </section>
 
@@ -175,11 +207,22 @@ export default function Home() {
               prêt à vous accompagner partout.
             </p>
           </div>
-          <img
-            src="/montages/sac.webp"
-            alt="Image"
-            className="h-[60vh] w-[60vh] mx-auto aspect-[3/2] overflow-hidden rounded-lg object-contain"
-          />
+          <motion.div
+            initial={{ opacity: 0.0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 0.5,
+              duration: 0.4,
+              ease: "easeInOut",
+            }}
+            className="relative flex flex-col gap-4 items-center justify-center"
+          >
+            <img
+              src="/montages/sac.webp"
+              alt="Image"
+              className="h-[60vh] w-[60vh] mx-auto aspect-[3/2] overflow-hidden rounded-lg object-contain"
+            />
+          </motion.div>
         </div>
       </section>
 
@@ -228,7 +271,7 @@ export default function Home() {
           <img
             src="/montages/secret-montage.webp"
             alt="Image"
-            className="h-[60vh] w-[60vh] mx-auto aspect-[3/2] overflow-hidden rounded-lg object-contain"
+            className="h-[60vh] w-[60vh] mx-auto overflow-hidden rounded-lg object-cover"
           />
         </div>
       </section>
