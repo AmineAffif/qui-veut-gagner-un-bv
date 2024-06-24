@@ -134,7 +134,7 @@ export default function Header() {
                   </>
                 ) : (
                   <>
-                    <Link
+                    {/* <Link
                       href="/users/login"
                       className={`justify-self-end px-5 py-1 text-sm ${buttonVariants({ variant: "outline" })}`}
                     >
@@ -145,7 +145,7 @@ export default function Header() {
                       className={`justify-self-end px-5 py-1 text-sm ${buttonVariants({ variant: "default" })}`}
                     >
                       S'inscrire
-                    </Link>
+                    </Link> */}
                   </>
                 )}
               </>
