@@ -129,6 +129,27 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <section className="w-full py-12 md:py-24 lg:py-32">
+        <div className="container w-auto md:w-[800px] gap-6 px-12 md:px-24 flex justify-center items-center flex-col lg:gap-10">
+          <div className="lg:col-span-2 space-y-4 w-[100%]">
+            <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+              Ils en parlent
+            </h2>
+            <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              Drake ! la fameuse coqueluche du net nous délivre son témoignage
+              exclusif rien que pour nous cette semaine !
+            </p>
+          </div>
+          <div className="relative flex flex-col gap-4 items-center justify-center">
+            <video
+              loop
+              controls
+              className="w-auto md:w-[800px] rounded-lg"
+              src="/video/Drake_interview_min.mp4"
+            />
+          </div>
+        </div>
+      </section>
       <div className="flex min-h-screen flex-col items-center justify-center p-24 w-full bg-custom-gray">
         <div className="flex w-[80vw] justify-center h-full flex-col text-white">
           <div className="text-5xl font-bold text-center uppercase">
