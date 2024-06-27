@@ -23,6 +23,9 @@ module.exports = {
       },
     },
     extend: {
+      dropShadow: {
+        'custom': '0 2px 0.75rem rgba(0, 0, 0, 0.1)',
+      },
       colors: {
         "custom-gray": "rgb(19, 19, 19)",
         sky_blue: "#5cc0ff",

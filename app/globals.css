@@ -74,4 +74,15 @@
     @apply bg-background text-foreground;
     overflow-x: hidden;
   }
+
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  
+  .animate-scroll {
+    animation: scroll linear infinite;
+    animation-duration: 40s; /* Ajustez la durée de l'animation selon vos besoins */
+  }
+  
 }

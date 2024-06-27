@@ -5,6 +5,7 @@ import { FlipWords } from "@/components/ui/flip-words";
 import { motion } from "framer-motion";
 import { VolumeX, Volume2 } from "lucide-react";
 import Image from "next/image";
+import LogoCarousel from "components/logoCarousel";
 
 import {
   Carousel,
@@ -112,6 +113,17 @@ export default function Home() {
     }
   };
 
+  const logos = [
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/NBC_logo.svg/567px-NBC_logo.svg.png",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Fox_News_Channel_logo.svg/2048px-Fox_News_Channel_logo.svg.png",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfohC5fhsADp9ZsPaJdHxIH2jaTVS6bYlVBg&s",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Discovery_Channel_-_Logo_2019.svg/800px-Discovery_Channel_-_Logo_2019.svg.png",
+    "https://upload.wikimedia.org/wikipedia/commons/5/5e/Mtv_logo_before_1994.png",
+    "https://upload.wikimedia.org/wikipedia/commons/f/fe/CARTOON_NETWORK_logo.png",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYDifNoGmPCktncfPW94aeUWyRDQ-Cv4KsZQ&s",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGQyRKP0MyiZVnqW7t0t25dzwexkskoX0Egw&s",
+  ];
+
   return (
     <main className="flex min-h-[auto] md:min-h-screen flex-col items-center justify-center w-full overflow-x-hidden">
       <div
@@ -129,11 +141,28 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight mt-24">
+        Ils en parlent
+      </h2>
+      <div className="relative flex flex-col gap-4 items-center justify-center mt-10">
+        <video
+          loop
+          controls
+          className="w-auto md:w-[800px] rounded-lg"
+          src="/video/main_complot.mp4"
+        />
+      </div>
+
+      <div className="min-h-full mt-36 bg-white drop-shadow-custom py-6 flex items-center justify-center pointer-events-none select-none">
+        <LogoCarousel logos={logos} />
+      </div>
+
       <section className="w-full py-12 md:py-24 lg:py-32">
         <div className="container w-auto md:w-[800px] gap-6 px-12 md:px-24 flex justify-center items-center flex-col lg:gap-10">
           <div className="lg:col-span-2 space-y-4 w-[100%]">
             <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-              Ils en parlent
+              Même Drak est dans le coup ! 🤯
             </h2>
             <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
               Drake ! la fameuse coqueluche du net nous délivre son témoignage
@@ -150,6 +179,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       <div className="flex min-h-screen flex-col items-center justify-center p-24 w-full bg-custom-gray">
         <div className="flex w-[80vw] justify-center h-full flex-col text-white">
           <div className="text-5xl font-bold text-center uppercase">
