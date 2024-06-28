@@ -57,7 +57,7 @@ const LogoCarousel: React.FC<LogoCarouselProps> = ({ logos }) => {
                 src={logo}
                 alt={`Logo ${index}`}
                 height={70}
-                className="h-[70px] max-h-full"
+                className="h-[70px] max-h-full object-contain"
               />
             </div>
           ))}

@@ -243,8 +243,8 @@ export default function Home() {
             initial={{ opacity: 0.0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{
-              delay: 0.3,
-              duration: 0.6,
+              delay: 0.1,
+              duration: 0.4,
               ease: "easeInOut",
             }}
             className="relative flex flex-col gap-4 items-center justify-center"
@@ -262,8 +262,8 @@ export default function Home() {
             initial={{ opacity: 0.0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{
-              delay: 0.6,
-              duration: 0.6,
+              delay: 0.4,
+              duration: 0.5,
               ease: "easeInOut",
             }}
             className="relative flex flex-col gap-4 items-center justify-center"
@@ -287,8 +287,8 @@ export default function Home() {
             initial={{ opacity: 0.0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{
-              delay: 1.2,
-              duration: 0.6,
+              delay: 0.6,
+              duration: 0.5,
               ease: "easeInOut",
             }}
             className="relative flex flex-col gap-4 items-center justify-center mt-12 md:mt-0"
@@ -372,7 +372,7 @@ export default function Home() {
             initial={{ opacity: 0.0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{
-              delay: 0.5,
+              delay: 0.2,
               duration: 0.4,
               ease: "easeInOut",
             }}
@@ -418,34 +418,48 @@ export default function Home() {
       </section>
 
       <section className="w-full py-12 md:py-24 lg:py-32">
-        <div className="container grid items-center gap-6 px-12 md:px-24 lg:grid-cols-3 lg:gap-10">
-          <div className="lg:col-span-2 space-y-4">
-            <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-              Un jeu gardé secret durant des siècles 🤫
-            </h2>
-            <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Protégé par des générations, ce jeu incroyable a été caché pendant
-              des siècles. Maintenant, il est enfin révélé, vous offrant une
-              chance unique de plonger dans son univers mystérieux et fascinant.
-            </p>
-            <Link
-              className={`justify-self-end px-5 py-1 text-sm ${buttonVariants({
-                variant: "default",
-              })}`}
-              href="/games/quiz"
-            >
-              Jouer maintenant
-            </Link>
+        <motion.div
+          initial={{ opacity: 0.0, y: -40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{
+            delay: 0.1,
+            duration: 0.3,
+            ease: "easeInOut",
+          }}
+          className="relative flex flex-col gap-4 items-center justify-center"
+        >
+          <div className="container grid items-center gap-6 px-12 md:px-24 lg:grid-cols-3 lg:gap-10">
+            <div className="lg:col-span-2 space-y-4">
+              <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+                Un jeu gardé secret durant des siècles 🤫
+              </h2>
+              <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                Protégé par des générations, ce jeu incroyable a été caché
+                pendant des siècles. Maintenant, il est enfin révélé, vous
+                offrant une chance unique de plonger dans son univers mystérieux
+                et fascinant.
+              </p>
+              <Link
+                className={`justify-self-end px-5 py-1 text-sm ${buttonVariants(
+                  {
+                    variant: "default",
+                  }
+                )}`}
+                href="/games/quiz"
+              >
+                Jouer maintenant
+              </Link>
+            </div>
+            <Image
+              src="/montages/secret-montage.webp"
+              alt="Image"
+              width={600}
+              height={600}
+              className="h-[60vh] w-[60vh] mx-auto overflow-hidden rounded-lg object-cover"
+              loading="lazy"
+            />
           </div>
-          <Image
-            src="/montages/secret-montage.webp"
-            alt="Image"
-            width={600}
-            height={600}
-            className="h-[60vh] w-[60vh] mx-auto overflow-hidden rounded-lg object-cover"
-            loading="lazy"
-          />
-        </div>
+        </motion.div>
       </section>
     </main>
   );
