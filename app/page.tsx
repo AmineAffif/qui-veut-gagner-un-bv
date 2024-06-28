@@ -488,7 +488,7 @@ export default function Home() {
               artistiques, pour vous inspirer et vous émerveiller.
             </p>
           </div>
-          <div className="relative flex gap-4 items-center justify-center">
+          <div className="w-screen px-12 relative flex flex-nowrap overflow-x-scroll gap-4 items-center justify-center">
             <video
               loop
               controls
@@ -499,7 +499,13 @@ export default function Home() {
               loop
               controls
               className="w-auto md:w-[300px] rounded-lg"
-              src="/video/meme_coin_min.mp4"
+              src="/video/onepiece_video_min.mp4"
+            />
+            <video
+              loop
+              controls
+              className="w-auto md:w-[300px] rounded-lg"
+              src="/video/son_fr_min.mp4"
             />
           </div>
         </div>
