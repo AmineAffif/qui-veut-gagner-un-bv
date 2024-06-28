@@ -461,6 +461,34 @@ export default function Home() {
           </div>
         </motion.div>
       </section>
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-[#6cc8ff4d]">
+        <div className="container w-auto md:w-[800px] gap-6 px-12 md:px-24 flex justify-center items-center flex-col lg:gap-10">
+          <div className="lg:col-span-2 space-y-4 w-[100%]">
+            <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+              Quelques cévi-création originales
+            </h2>
+            <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+              Découvrez quelques cévi-créations originales, réalisées par notre
+              équipe de choc (moi). Des montages uniques et des créations
+              artistiques, pour vous inspirer et vous émerveiller.
+            </p>
+          </div>
+          <div className="relative flex gap-4 items-center justify-center">
+            <video
+              loop
+              controls
+              className="w-auto md:w-[300px] rounded-lg"
+              src="/video/meme_coin_min.mp4"
+            />
+            <video
+              loop
+              controls
+              className="w-auto md:w-[300px] rounded-lg"
+              src="/video/meme_coin_min.mp4"
+            />
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
