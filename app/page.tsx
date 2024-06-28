@@ -476,43 +476,47 @@ export default function Home() {
           </div>
         </motion.div>
       </section>
-      <section className="w-full py-12 md:py-24 lg:py-32 bg-[#6cc8ff4d]">
-        <div className="container w-auto md:w-[800px] gap-6 px-12 md:px-24 flex justify-center items-center flex-col lg:gap-10">
-          <div className="lg:col-span-2 space-y-4 w-[100%]">
-            <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-              Quelques cévi-création originales
+      <section className="relative w-full py-12 md:py-24 lg:py-32">
+        <div className="container mx-auto px-6 lg:px-24 flex flex-col items-center justify-center gap-10">
+          <div className="w-full lg:col-span-2 space-y-4">
+            <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">
+              Quelques créations originales
             </h2>
-            <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Découvrez quelques cévi-créations originales, réalisées par notre
+            <p className="max-w-[600px] text-gray-600 md:text-xl">
+              Découvrez quelques créations originales, réalisées par notre
               équipe de choc (moi). Des montages uniques et des créations
               artistiques, pour vous inspirer et vous émerveiller.
             </p>
           </div>
-          <div className="w-screen px-12 relative flex flex-nowrap overflow-x-scroll gap-4 items-center justify-center">
-            <video
-              loop
-              controls
-              className="w-auto md:w-[300px] rounded-lg"
-              src="/video/meme_coin_min.mp4"
-            />
-            <video
-              loop
-              controls
-              className="w-auto md:w-[300px] rounded-lg"
-              src="/video/onepiece_video_min.mp4"
-            />
-            <video
-              loop
-              controls
-              className="w-auto md:w-[300px] rounded-lg"
-              src="/video/son_fr_min.mp4"
-            />
-            <video
-              loop
-              controls
-              className="w-auto md:w-[300px] rounded-lg"
-              src="/video/boucle_min.mp4"
-            />
+          <div className="w-full h-auto flex relative">
+            <div className="w-[23%] md:w-[27%] h-full absolute right-0 top-0 bg-gradient-to-r from-transparent to-white pointer-events-none z-10"></div>
+            <div className="w-[23%] md:w-[27%] left-0 absolute inset-0 bg-gradient-to-l from-transparent to-white pointer-events-none z-10"></div>
+            <div className="relative flex flex-nowrap overflow-x-auto gap-4 items-center justify-start px-6 lg:px-0">
+              <video
+                loop
+                controls
+                className="w-auto md:w-[300px] rounded-lg"
+                src="/video/meme_coin_min.mp4"
+              />
+              <video
+                loop
+                controls
+                className="w-auto md:w-[300px] rounded-lg"
+                src="/video/onepiece_video_min.mp4"
+              />
+              <video
+                loop
+                controls
+                className="w-auto md:w-[300px] rounded-lg"
+                src="/video/son_fr_min.mp4"
+              />
+              <video
+                loop
+                controls
+                className="w-auto md:w-[300px] rounded-lg"
+                src="/video/boucle_min.mp4"
+              />
+            </div>
           </div>
         </div>
       </section>
