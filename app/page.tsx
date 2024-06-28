@@ -250,14 +250,28 @@ export default function Home() {
             }}
             className="relative flex flex-col gap-4 items-center justify-center"
           >
-            <Image
-              src="/montages/album-cover.webp"
-              width={600}
-              height={600}
-              alt="Image"
-              className="mx-auto aspect-[2/2] md:aspect-[inherit] overflow-hidden rounded-lg object-contain"
-              loading="lazy"
-            />
+            <div className="w-80 h-80 perspective">
+              <div className="relative w-full h-full duration-700 transform-style-3d group hover:transform rotate-y-180">
+                <div className="absolute inset-0 w-full h-full">
+                  <Image
+                    src="/montages/album-cover.webp"
+                    alt="Front Image"
+                    layout="fill"
+                    className="rounded-lg object-cover rotate-y-180"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="absolute inset-0 w-full h-full bg-blue-500 backface-hidden transform rotate-y-180">
+                  <Image
+                    src="/montages/cover_2-min.jpg"
+                    alt="Back Image"
+                    layout="fill"
+                    className="rounded-lg object-cover"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </div>
           </motion.div>
           <motion.div
             initial={{ opacity: 0.0, y: 40 }}
@@ -271,10 +285,10 @@ export default function Home() {
           >
             <div className="space-y-4">
               <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-                QVGDB
+                QVGDBV
               </h2>
               <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Découvrez l'album <strong>QVGDB</strong> : une immersion
+                Découvrez l'album <strong>QVGDBV</strong> : une immersion
                 musicale captivante où chaque note raconte une histoire. Plongez
                 dans les sonorités uniques et rythmes envoûtants de cette
                 expérience auditive ultime
