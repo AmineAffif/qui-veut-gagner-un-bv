@@ -165,8 +165,9 @@ export default function Home() {
               Même Drak est dans le coup ! 🤯
             </h2>
             <p className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Drak ! la fameuse coqueluche du net nous délivre son témoignage
-              exclusif rien que pour nous cette semaine !
+              Drak ! Oui Drak et bel et bien DRAK la fameuse coqueluche du net
+              nous délivre son témoignage exclusif rien que pour nous cette
+              semaine !
             </p>
           </div>
           <div className="relative flex flex-col gap-4 items-center justify-center">
