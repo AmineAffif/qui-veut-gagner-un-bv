@@ -507,6 +507,12 @@ export default function Home() {
               className="w-auto md:w-[300px] rounded-lg"
               src="/video/son_fr_min.mp4"
             />
+            <video
+              loop
+              controls
+              className="w-auto md:w-[300px] rounded-lg"
+              src="/video/boucle_min.mp4"
+            />
           </div>
         </div>
       </section>
