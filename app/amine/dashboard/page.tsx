@@ -16,7 +16,7 @@ export default function AdminDashboardPage() {
     <PrivateAdminRoute>
       <div className="flex">
         <aside className="w-64 h-screen bg-white border-r pt-28 px-5">
-          <h3>Hey {user?.admin_user.first_name} 😁</h3>
+          <h3>Hey {user?.first_name} 😁</h3>
           <nav className="mt-10">
             <ul>
               <li className="mb-4">
@@ -25,6 +25,14 @@ export default function AdminDashboardPage() {
                   className="text-gray-700 hover:text-blue-500"
                 >
                   Questions
+                </Link>
+              </li>
+              <li className="mb-4">
+                <Link
+                  href="/amine/users"
+                  className="text-gray-700 hover:text-blue-500"
+                >
+                  Users
                 </Link>
               </li>
             </ul>

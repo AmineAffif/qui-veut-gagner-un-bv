@@ -9,6 +9,10 @@ const PrivateAdminRoute = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   useEffect(() => {
+    console.log("isAuthenticated = ", isAuthenticated);
+    console.log("user?.is_admin = ", user?.is_admin);
+    console.log("user = ", user);
+
     if (!isAuthenticated || !user?.is_admin) {
       router.push("/amine/login");
     }

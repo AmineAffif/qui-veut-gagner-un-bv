@@ -21,7 +21,7 @@ interface AdminLoginFormValues {
 }
 
 const validate = (
-  values: AdminLoginFormValues,
+  values: AdminLoginFormValues
 ): FormikErrors<AdminLoginFormValues> => {
   const errors: FormikErrors<AdminLoginFormValues> = {};
   if (!values.email) errors.email = "L'email est requis";
@@ -40,18 +40,18 @@ const login = async (values: AdminLoginFormValues) => {
       },
       body: JSON.stringify({ admin_user: values }),
       credentials: "include",
-    },
+    }
   );
 
   if (!response.ok) {
     let error = "Une erreur est survenue";
     try {
       const data = await response.json();
-      if (data.error) {
-        error = data.error;
+      if (data.error === "Invalid login or password") {
+        error = "Login ou mot de passe incorrect";
       }
     } catch (e) {
-      // Si la réponse n'est pas un JSON valide, on garde le message d'erreur par défaut
+      // Si la réponse n'est pas un texte valide, on garde le message d'erreur par défaut
     }
     throw new Error(error);
   }
@@ -65,7 +65,7 @@ export default function AdminLoginPage() {
 
   const handleSubmit: FormikConfig<AdminLoginFormValues>["onSubmit"] = async (
     values,
-    { setSubmitting, setStatus },
+    { setSubmitting, setStatus }
   ) => {
     try {
       setSubmitting(true);
