@@ -5,14 +5,16 @@ import { useRouter, useParams } from "next/navigation";
 import { UserType } from "@/types/UserType";
 import Lottie from "lottie-react";
 import loadingC from "public/loading_c.json";
-import { Loader2, Save } from "lucide-react";
+import { Loader2, Save, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const UserDetailPage = () => {
   const { id } = useParams();
+  const router = useRouter();
   const [user, setUser] = useState<UserType | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -78,6 +80,34 @@ const UserDetailPage = () => {
     }
   };
 
+  const handleDelete = async () => {
+    const confirmed = confirm("Are you sure you want to delete this user?");
+    if (confirmed) {
+      setIsDeleting(true);
+      const token = sessionStorage.getItem("token");
+      if (!token) {
+        throw new Error("No token found");
+      }
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          credentials: "include",
+        }
+      );
+
+      if (response.ok) {
+        router.push("/amine/users");
+      } else {
+        setIsDeleting(false);
+      }
+    }
+  };
+
   const handleChange = (e: { target: { name: string; value: string } }) => {
     const { name, value } = e.target;
     setUser((prevUser) => {
@@ -99,6 +129,7 @@ const UserDetailPage = () => {
         </div>
       </div>
     );
+
   return (
     <div className="p-6 pt-24">
       <h1 className="text-3xl font-bold mb-6">User Details</h1>
@@ -144,27 +175,45 @@ const UserDetailPage = () => {
             className="w-full mt-2 p-2 border"
           />
         </div>
-        {!isEditing ? (
-          <button
-            type="button"
-            onClick={handleEdit}
-            className="px-4 py-2 bg-blue-500 text-white"
-          >
-            Modifier
-          </button>
-        ) : isSaving ? (
-          <Button disabled>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Enregistrement...
-          </Button>
-        ) : (
+        <div className="flex space-x-4">
+          {!isEditing ? (
+            <button
+              type="button"
+              onClick={handleEdit}
+              className="px-4 py-2 bg-blue-500 text-white"
+            >
+              Modifier
+            </button>
+          ) : isSaving ? (
+            <Button disabled>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Enregistrement...
+            </Button>
+          ) : (
+            <Button
+              onClick={handleSave}
+              className="bg-blue-500 text-white hover:bg-blue-600"
+            >
+              <Save className="mr-2 h-4 w-4" /> Sauvegarder
+            </Button>
+          )}
           <Button
-            onClick={handleSave}
-            className="bg-blue-500 text-white hover:bg-blue-600"
+            onClick={handleDelete}
+            className="bg-red-500 text-white hover:bg-red-600"
+            disabled={isDeleting}
           >
-            <Save className="mr-2 h-4 w-4" /> Sauvegarder
+            {isDeleting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Suppression...
+              </>
+            ) : (
+              <>
+                <Trash className="mr-2 h-4 w-4" /> Supprimer
+              </>
+            )}
           </Button>
-        )}
+        </div>
       </form>
     </div>
   );
