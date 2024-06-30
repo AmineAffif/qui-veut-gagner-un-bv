@@ -5,8 +5,9 @@ import { useRouter, useParams } from "next/navigation";
 import { UserType } from "@/types/UserType";
 import Lottie from "lottie-react";
 import loadingC from "public/loading_c.json";
-import { Loader2, Save, Trash } from "lucide-react";
+import { Edit, Loader2, Save, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 const UserDetailPage = () => {
   const { id } = useParams();
@@ -44,7 +45,8 @@ const UserDetailPage = () => {
     }
   }, [id]);
 
-  const handleEdit = () => {
+  const handleEdit = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
     setIsEditing(true);
   };
 
@@ -136,54 +138,54 @@ const UserDetailPage = () => {
       <form>
         <div className="mb-4">
           <label className="block text-gray-700">ID</label>
-          <input
-            type="text"
+          <Input
+            type="number"
             name="id"
             value={user.id as number}
             disabled
-            className="w-full mt-2 p-2 border"
+            className="w-full p-2 border"
           />
         </div>
         <div className="mb-4">
           <label className="block text-gray-700">Email</label>
-          <input
+          <Input
             type="text"
             name="email"
             value={user.email}
             onChange={handleChange}
             disabled={!isEditing}
-            className="w-full mt-2 p-2 border"
+            className="w-full p-2 border"
           />
         </div>
         <div className="mb-4">
           <label className="block text-gray-700">Created At</label>
-          <input
+          <Input
             type="text"
             name="created_at"
             value={user.created_at}
             disabled
-            className="w-full mt-2 p-2 border"
+            className="w-full p-2 border"
           />
         </div>
         <div className="mb-4">
           <label className="block text-gray-700">Updated At</label>
-          <input
+          <Input
             type="text"
             name="updated_at"
             value={user.updated_at}
             disabled
-            className="w-full mt-2 p-2 border"
+            className="w-full p-2 border"
           />
         </div>
         <div className="flex space-x-4">
           {!isEditing ? (
-            <button
+            <Button
               type="button"
               onClick={handleEdit}
               className="px-4 py-2 bg-blue-500 text-white"
             >
-              Modifier
-            </button>
+              <Edit className="mr-2 h-4 w-4" /> Modifier
+            </Button>
           ) : isSaving ? (
             <Button disabled>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />

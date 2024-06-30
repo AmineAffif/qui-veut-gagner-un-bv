@@ -5,8 +5,9 @@ import { useRouter, useParams } from "next/navigation";
 import { QuestionType } from "@/types/QuestionType";
 import Lottie from "lottie-react";
 import loadingC from "public/loading_c.json";
-import { Loader2, Save } from "lucide-react";
+import { Edit, Loader2, Save } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 const QuestionDetailPage = () => {
   const router = useRouter();
@@ -43,7 +44,8 @@ const QuestionDetailPage = () => {
     }
   }, [id]);
 
-  const handleEdit = () => {
+  const handleEdit = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
     setIsEditing(true);
   };
 
@@ -111,29 +113,28 @@ const QuestionDetailPage = () => {
       <form>
         <div className="mb-4">
           <label className="block text-gray-700">ID</label>
-          <input
-            type="text"
+          <Input
+            type="number"
             name="id"
             value={question.id as number}
             disabled
-            className="w-full mt-2 p-2 border"
+            className="w-full p-2 border"
           />
         </div>
         <div className="mb-4">
           <label className="block text-gray-700">Text</label>
-          <input
+          <Input
             type="text"
             name="text"
             value={question.text}
-            onChange={handleChange}
             disabled={!isEditing}
-            className="w-full mt-2 p-2 border"
+            className="w-full p-2 border"
           />
         </div>
         <div className="mb-4">
           <label className="block text-gray-700">Right Answer ID</label>
-          <input
-            type="text"
+          <Input
+            type="number"
             name="right_answer_id"
             value={question.right_answer_id as number}
             onChange={handleChange}
@@ -143,7 +144,7 @@ const QuestionDetailPage = () => {
         </div>
         <div className="mb-4">
           <label className="block text-gray-700">Created At</label>
-          <input
+          <Input
             type="text"
             name="created_at"
             value={question.created_at}
@@ -153,7 +154,7 @@ const QuestionDetailPage = () => {
         </div>
         <div className="mb-4">
           <label className="block text-gray-700">Updated At</label>
-          <input
+          <Input
             type="text"
             name="updated_at"
             value={question.updated_at}
@@ -165,7 +166,7 @@ const QuestionDetailPage = () => {
           <h2 className="text-2xl font-bold">Answers</h2>
           {question.answers.map((answer, index) => (
             <div key={answer.id} className="flex items-center mb-2">
-              <input
+              <Input
                 type="text"
                 name={`answers[${index}].text`}
                 value={answer.text}
@@ -183,7 +184,7 @@ const QuestionDetailPage = () => {
                 disabled={!isEditing}
                 className="w-full mt-2 p-2 border"
               />
-              <input
+              <Input
                 type="checkbox"
                 name="right_answer_id"
                 checked={question.right_answer_id === answer.id}
@@ -199,19 +200,19 @@ const QuestionDetailPage = () => {
                   });
                 }}
                 disabled={!isEditing}
-                className="ml-4"
+                className="ml-4 w-5 mt-2"
               />
             </div>
           ))}
         </div>
         {!isEditing ? (
-          <button
+          <Button
             type="button"
             onClick={handleEdit}
             className="px-4 py-2 bg-blue-500 text-white"
           >
-            Modifier
-          </button>
+            <Edit className="mr-2 h-4 w-4" /> Modifier
+          </Button>
         ) : isSaving ? (
           <Button disabled>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
