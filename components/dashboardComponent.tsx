@@ -59,20 +59,20 @@ export default function DashboardComponent() {
                 Users
               </Link>
               <Link
-                href="#"
+                href="/amine/admin_users"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
                 prefetch={false}
               >
-                <GamepadIcon className="h-4 w-4" />
-                Games
+                <UsersIcon className="h-4 w-4" />
+                AdminUsers
               </Link>
               <Link
-                href="#"
+                href="/amine/questions"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
                 prefetch={false}
               >
-                <SettingsIcon className="h-4 w-4" />
-                Settings
+                <UsersIcon className="h-4 w-4" />
+                Questions
               </Link>
             </nav>
           </div>

@@ -26,8 +26,8 @@ export default function Layout({ children }: { children: ReactNode }) {
           <div className="flex-1 overflow-auto py-2">
             <nav className="grid items-start px-4 text-sm font-medium">
               <Link
-                href="#"
-                className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
+                href="/amine/dashboard"
+                className="flex items-center gap-3 rounded-lg bg-blue-500 text-white px-3 py-2 text-primary transition-all"
                 prefetch={false}
               >
                 <HomeIcon className="h-4 w-4" />
@@ -42,20 +42,20 @@ export default function Layout({ children }: { children: ReactNode }) {
                 Users
               </Link>
               <Link
-                href="#"
+                href="/amine/admin_users"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
                 prefetch={false}
               >
-                <GamepadIcon className="h-4 w-4" />
-                Games
+                <UsersIcon className="h-4 w-4" />
+                Admin Users
               </Link>
               <Link
-                href="#"
+                href="/amine/questions"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
                 prefetch={false}
               >
-                <SettingsIcon className="h-4 w-4" />
-                Settings
+                <UsersIcon className="h-4 w-4" />
+                Questions
               </Link>
             </nav>
           </div>
