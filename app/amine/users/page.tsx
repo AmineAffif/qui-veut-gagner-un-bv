@@ -15,6 +15,7 @@ import { PlusIcon, SearchIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { formatTimestamp } from "@/utils/TimeFormatter";
+import AmineLayout from "../amineLayout";
 
 const UsersPage = () => {
   const [users, setUsers] = useState<UserType[]>([]);
@@ -46,7 +47,8 @@ const UsersPage = () => {
   };
 
   return (
-    <div className="p-6 pt-24">
+    // <div className="p-6 pt-24">
+    <AmineLayout>
       <div className="mb-4 flex justify-between">
         <h1 className="text-3xl font-bold mb-6">Users</h1>
         <Link href="/amine/questions/new" className="h-0">
@@ -95,7 +97,8 @@ const UsersPage = () => {
           </TableBody>
         </Table>
       </div>
-    </div>
+    </AmineLayout>
+    // </div>
   );
 };
 

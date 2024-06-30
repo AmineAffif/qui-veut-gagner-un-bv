@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import PrivateAdminRoute from "components/privateAdminRoute";
 import { useAuth } from "@/context/AuthContext";
+import DashboardComponent from "components/dashboardComponent";
 
 export default function AdminDashboardPage() {
   const { user, loading } = useAuth();
@@ -14,8 +15,8 @@ export default function AdminDashboardPage() {
 
   return (
     <PrivateAdminRoute>
-      <div className="flex">
-        <aside className="w-64 h-screen bg-white border-r pt-28 px-5">
+      <div className="flex w-screen pt-20">
+        {/* <aside className="w-64 h-screen bg-white border-r pt-10 px-5">
           <h3>Hey {user?.first_name} 😁</h3>
           <nav className="mt-10">
             <ul>
@@ -40,8 +41,8 @@ export default function AdminDashboardPage() {
         </aside>
         <main className="flex-1 p-6">
           <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-          {/* Contenu du tableau de bord */}
-        </main>
+        </main> */}
+        <DashboardComponent />
       </div>
     </PrivateAdminRoute>
   );
