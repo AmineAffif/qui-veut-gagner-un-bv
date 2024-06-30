@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import {
   GamepadIcon,
   HomeIcon,
@@ -9,10 +9,22 @@ import {
 } from "lucide-react";
 
 export default function Layout({ children }: { children: ReactNode }) {
+  const [currentPath, setCurrentPath] = useState("");
+
+  useEffect(() => {
+    setCurrentPath(window.location.pathname);
+  }, []);
+
+  const getLinkClasses = (href: string) => {
+    return currentPath.startsWith(href)
+      ? "flex items-center gap-3 rounded-lg bg-blue-500 text-white px-3 py-2 transition-all"
+      : "flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary";
+  };
+
   return (
     <>
       <div className="hidden border-r bg-muted/40 lg:block">
-        <div className="flex min-h-screen h-full max-h-screen flex-col gap-2">
+        <div className="flex min-h-screen h-full max-h-screen flex-col gap-2 w-[280px]">
           <div className="flex h-[60px] items-center border-b px-6">
             <Link
               href="#"
@@ -27,7 +39,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             <nav className="grid items-start px-4 text-sm font-medium">
               <Link
                 href="/amine/dashboard"
-                className="flex items-center gap-3 rounded-lg bg-blue-500 text-white px-3 py-2 text-primary transition-all"
+                className={getLinkClasses("/amine/dashboard")}
                 prefetch={false}
               >
                 <HomeIcon className="h-4 w-4" />
@@ -35,7 +47,7 @@ export default function Layout({ children }: { children: ReactNode }) {
               </Link>
               <Link
                 href="/amine/users"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                className={getLinkClasses("/amine/users")}
                 prefetch={false}
               >
                 <UsersIcon className="h-4 w-4" />
@@ -43,7 +55,7 @@ export default function Layout({ children }: { children: ReactNode }) {
               </Link>
               <Link
                 href="/amine/admin_users"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                className={getLinkClasses("/amine/admin_users")}
                 prefetch={false}
               >
                 <UsersIcon className="h-4 w-4" />
@@ -51,7 +63,7 @@ export default function Layout({ children }: { children: ReactNode }) {
               </Link>
               <Link
                 href="/amine/questions"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                className={getLinkClasses("/amine/questions")}
                 prefetch={false}
               >
                 <UsersIcon className="h-4 w-4" />
