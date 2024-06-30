@@ -18,12 +18,18 @@ const QuestionDetailPage = () => {
   useEffect(() => {
     if (id) {
       const fetchQuestion = async () => {
+        const token = sessionStorage.getItem("token");
+        if (!token) {
+          throw new Error("No token found");
+        }
+
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/questions/${id}`,
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
             },
             credentials: "include",
           }
@@ -54,13 +60,17 @@ const QuestionDetailPage = () => {
           })),
         },
       };
-
+      const token = sessionStorage.getItem("token");
+      if (!token) {
+        throw new Error("No token found");
+      }
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/questions/${id}`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           credentials: "include",
           body: JSON.stringify(updated_question_data),
@@ -96,7 +106,7 @@ const QuestionDetailPage = () => {
       </div>
     );
   return (
-    <div className="p-6 pt-24">
+    <div className="p-6 pt-24 w-[90vw] md:w-[70vw]">
       <h1 className="text-3xl font-bold mb-6">Question Details</h1>
       <form>
         <div className="mb-4">

@@ -44,7 +44,7 @@ const NewQuestionPage = () => {
       question: {
         text: question.text,
         right_answer_id: question.answers.findIndex(
-          (answer) => answer.id === question.right_answer_id,
+          (answer) => answer.id === question.right_answer_id
         ),
         answers_attributes: question.answers.map((answer) => ({
           text: answer.text,
@@ -52,16 +52,21 @@ const NewQuestionPage = () => {
       },
     };
 
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      throw new Error("No token found");
+    }
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/questions`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         credentials: "include",
         body: JSON.stringify(new_question_data),
-      },
+      }
     );
 
     if (response.ok) {

@@ -29,26 +29,32 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/sign_out`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        }
-      );
-
+      const user = JSON.parse(sessionStorage.getItem("user"));
+      const token = sessionStorage.getItem("token");
+      let url = `${process.env.NEXT_PUBLIC_API_URL}/users/sign_out`;
+  
+      if (user && user.is_admin) {
+        url = `${process.env.NEXT_PUBLIC_API_URL}/admin_users/sign_out`;
+      }
+  
+      const response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        credentials: "include",
+      });
+  
       if (response.ok) {
         sessionStorage.removeItem("token");
         sessionStorage.removeItem("user");
-
+  
         document.cookie.split(";").forEach((cookie) => {
           const [name] = cookie.split("=");
           document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
         });
-    
+  
         setIsAuthenticated(false);
         setUser(null);
       } else {
@@ -57,7 +63,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error("An error occurred during logout", error);
     }
-  };
+  };  
 
   return (
     <AuthContext.Provider

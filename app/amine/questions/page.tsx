@@ -22,12 +22,18 @@ const QuestionsPage = () => {
 
   useEffect(() => {
     const fetchQuestions = async () => {
+      const token = sessionStorage.getItem("token");
+      if (!token) {
+        throw new Error("No token found");
+      }
+
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/questions`,
         {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           credentials: "include",
         }
