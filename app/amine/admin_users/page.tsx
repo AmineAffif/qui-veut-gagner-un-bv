@@ -54,7 +54,7 @@ const AdminUsersPage = () => {
     <AmineLayout>
       <div className="mb-4 flex justify-between">
         <h1 className="text-3xl font-bold mb-6">Admin Users</h1>
-        <Link href="/amine/questions/new" className="h-0">
+        <Link href="/amine/admin_users/new" className="h-0">
           <Button className="bg-green-600 hover:bg-green-700">
             <PlusIcon className="mr-2 h-4 w-4" /> New
           </Button>
